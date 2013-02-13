@@ -1,0 +1,5 @@
+.DS_Store
+andro_data.db
+*.pyc
+*.swp
+*.swo
