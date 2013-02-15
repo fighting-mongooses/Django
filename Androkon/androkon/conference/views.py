@@ -8,8 +8,10 @@ from django.http import HttpResponse
 #def profile(request):
 #	entries = Conference.objects.get(user= )
 
-def JSON(request):
+def json_cons(request):
     json = serializers.serialize("json", Conference.objects.all())
-    json += serializers.serialize("json", Event.objects.all())
-    
+    return HttpResponse(json, mimetype='application/json')
+
+def json_events(request):
+    json = serializers.serialize("json", Event.objects.all())
     return HttpResponse(json, mimetype='application/json')
