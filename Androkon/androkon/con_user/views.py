@@ -23,10 +23,10 @@ def ConAdminRegistration(request):
 				password=form.cleaned_data['password'])
 			user.save()
 			con_user = ConAdmin(user=user, name=form.cleaned_data['name'], surname=form.cleaned_data['surname'])
-			con._usersave()
+			#con_user.save()
 			return HttpResponseRedirect('/profile/')
 		else:
-			return render_to_response('regiter.html', {'form': form}, context_instance=RequestContext(request))
+			return render_to_response('register.html', {'form': form}, context_instance=RequestContext(request))
 	else:
 		# Show the user a blank registration form
 		form = RegistrationForm()
