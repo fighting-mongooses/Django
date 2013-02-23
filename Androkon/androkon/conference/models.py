@@ -18,7 +18,7 @@ class Conference(models.Model):
 		return self.name
 
 	def save(self):
-		self.slugs = slugify(self.name)
+		self.slug = slugify(self.name)
 		super(Conference, self).save()
 
 	def get_absolute_url(self):
