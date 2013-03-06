@@ -16,6 +16,7 @@
 			{
 				font-family: arial;
 				font-size: 12px;
+				text-align: center;
 			}
 			div.register_div
 			{
@@ -23,11 +24,51 @@
 				font-weight: bold;
 				font-size: 16px;
 			}
+			ul.header
+			{
+				background-color: #AADDDD;
+				width: 100%;
+				margin:0;
+				padding:0;
+				display: inline-block;
+				list-style-type: none;
+			}
+			li
+			{
+				float: left;
+			}
+			a.header
+			{
+				display:block;
+				width: 300px;
+				text-align: center;
+				font-family: arial;
+				font-weight: bold;
+				font-size: 16px;
+				text-decoration: none;
+			}
+			a.header:link,a.header:visited
+			{
+				background-color: #AADDDD;
+				color: #4466AA;
+			}
+			a.header:hover
+			{
+				background-color: #F0F0FF;
+				color: #AAAADD;
+			}
 		</style>
 		{% block extrahead %}
 		{% endblock %}
 	</head>
 	<body>
+		<div>
+			<ul class="header">
+				<li><a class="header" href="/login">Login</a></li>
+				<li><a class="header" href="/register">Register</a></li>
+			</ul>
+		</div>
+		<br>
 		<div id="PageContainer">
 			{% block content %}
 			{% endblock %}
