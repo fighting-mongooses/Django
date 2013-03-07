@@ -10,7 +10,9 @@ class Conference(models.Model):
 	description = models.TextField(help_text='A description of the conference.')
 	start_date 	= models.DateTimeField(help_text='Start date and time for the conference.')
 	end_date 	= models.DateTimeField(help_text='End date and time for the conference.')
-
+	twitter 	= models.CharField(max_length=50, help_text='The twitter account of the conference')
+	website     = models.URLField(help_text='The website of the conference')
+	guests		= models.TextField(help_text='A description of any guest speakers attending the conference', blank=True)
 	# Meta data:
 	user = models.ForeignKey(User)
 
@@ -30,7 +32,7 @@ class Event(models.Model):
 	name 		= models.CharField(max_length="50", help_text="The name of the event. Maximum 50 characters.")
 	slug 		= models.SlugField(unique=True)
 	description = models.TextField(help_text="A description of the event.")
-	time 		= models.DateTimeField(help_text="time and date for the event")
+	time 		= models.DateTimeField(help_text="Time and date for the event")
 	conference 	= models.ForeignKey(Conference)
 
 	def __unicode__(self):

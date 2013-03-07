@@ -2,6 +2,7 @@
 {% block content %}
 <p>New User? <a href="/register/">Sign up now!</a></p>
 <form action="" method="post">
+<p>{% if message %}{{ message }}{% endif %}
 {% csrf_token %}
 {% if form.errors %}<p>Please correct the following fields:</p>{% endif %}
 <div class="register_div">

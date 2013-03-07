@@ -7,6 +7,7 @@ from con_user.forms import RegistrationForm, LoginForm
 from con_user.models import ConAdmin
 from django.contrib.auth import authenticate, login, logout
 from con_user.forms import RegistrationForm
+from conference.models import Conference
 
 def ConAdminRegistration(request):
 
@@ -22,11 +23,11 @@ def ConAdminRegistration(request):
 				email=form.cleaned_data['email'],
 				password=form.cleaned_data['password'])
 			user.save()
-			con_user = ConAdmin(user=user, name=form.cleaned_data['name'], surname=form.cleaned_data['surname'])
-			con._usersave()
+			con_user = ConAdmin(user=user, name=form.cleaned_data['name'])
+			con_user.save()
 			return HttpResponseRedirect('/profile/')
 		else:
-			return render_to_response('regiter.html', {'form': form}, context_instance=RequestContext(request))
+			return render_to_response('register.html', {'form': form}, context_instance=RequestContext(request))
 	else:
 		# Show the user a blank registration form
 		form = RegistrationForm()
@@ -35,6 +36,7 @@ def ConAdminRegistration(request):
 
 
 def LoginRequest(request):
+
 	if request.user.is_authenticated():
 		return HttpResponseRedirect('/profile/')
 	if request.method == 'POST':
@@ -47,7 +49,10 @@ def LoginRequest(request):
 				login(request, con_user)
 				return HttpResponseRedirect('/profile/')
 			else:
-				return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
+				message = "That is an invalid username and password combination. Please try again."
+				return render_to_response('login.html', {'form': form, 'message': message}, context_instance=RequestContext(request))
+		else:
+			return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
 	else:
 		form = LoginForm()
 		context = {'form': form}
@@ -55,4 +60,23 @@ def LoginRequest(request):
 
 def LogoutRequest(request):
 	logout(request)
-	return HttpResponseRedirect('/')			
+	return HttpResponseRedirect('/login/')	
+
+def ProfileRequest(request, username):
+	user = User.objects.get(username=username)
+	conuser = request.user.get_profile
+	message = "Hey, there"
+	context = {'conuser': conuser, 'user': user, 'username': username, 'message': message}
+	return render_to_response('profile.html', context, context_instance=RequestContext(request))
+
+
+@login_required
+def Profile(request):
+    if not request.user.is_authenticated():
+        return HrttpResponseRedirect('/login/')
+    con_user = request.user.get_profile
+    message = "Bottom"
+    name = request.user.username
+    cons = Conference.objects.all().filter(user = request.user)
+    context = {'con_user': con_user, 'message': message, 'name': name, 'cons': cons}
+    return render_to_response('profile.html', context, context_instance=RequestContext(request))

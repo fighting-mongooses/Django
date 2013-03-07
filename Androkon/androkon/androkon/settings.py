@@ -12,7 +12,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '/Users/ciaranegan/Desktop/Androkon/androkon/andro_data.db',                      # Or path to database file if using sqlite3.
+        'NAME': '/Users/ciaranegan/Django/Androkon/androkon/andro_data.db',                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -57,6 +57,12 @@ MEDIA_URL = ''
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
 STATIC_ROOT = ''
+
+# URL for @login_required decorator to use
+LOGIN_URL = '/login/'
+
+# redirect authenticated users
+LOGIN_REDIRECT_URL = '/profile/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -106,11 +112,11 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    "/Users/ciaranegan/Desktop/Androkon/templates",
+    "/Users/ciaranegan/Django/Androkon/templates",
 )
 
 # This will provide our get_profile() method
-AUTH_PROFILE_MODULE =' con_user.ConAdmin'
+AUTH_PROFILE_MODULE =' con_user.conadmin'
 
 INSTALLED_APPS = (
     'django.contrib.auth',

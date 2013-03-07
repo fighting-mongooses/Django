@@ -4,11 +4,19 @@ from django.db.models.signals import post_save
 
 class ConAdmin(models.Model):
 	user 	= models.OneToOneField(User)
-	name 	= models.CharField(max_length=15)
-	surname = models.CharField(max_length=15)
-	
+	name 	= models.CharField(max_length=100, blank=True)
+
 	def __unicode__(self):
 		return self.name
+
+
+	def save(self, *args, **kwargs):
+	    try:
+	        existing = ConAdmin.objects.get(user=self.user)
+	        self.id = existing.id #force update instead of insert
+	    except ConAdmin.DoesNotExist:
+	        pass 
+	    models.Model.save(self, *args, **kwargs)
 
 def create_conadmin_user_callback(sender, instance, **kwargs):
 	con_user, new = ConAdmin.objects.get_or_create(user=instance)

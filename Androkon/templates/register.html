@@ -2,7 +2,7 @@
 {% block content %}
 	<form action="" method="post">
 	{% csrf_token %}
-	{% if form.errors %}<p>Please correct the following fields:</p>{% endif %}
+	{% if form.errors %}<p><h1>Please correct the following fields:</h1></p>{% endif %}
 	<div class="register_div">
 	    {% if form.username.errors %}<p class="error">{{ form.username.errors }}</p>{% endif %}
 	    <p><label for="username"{% if form.username.errors %} class="error"{% endif %}>Username:</label></p>
@@ -22,11 +22,6 @@
 	    {% if form.password1.errors %}<p class="error">{{ form.password1.errors }}</p>{% endif %}
 	    <p><label for="password1"{% if form.password1.errors %} class="error"{% endif %}>Verify Password:</label></p>
 	    <p>{{ form.password1 }}</p>
-	</div>
-	<div class="register_div">
-	    {% if form.surname.errors %}<p class="error">{{ form.surname.errors }}</p>{% endif %}
-	    <p><label for="surname"{% if form.surname.errors %} class="error"{% endif %}>Surname:</label></p>
-	    <p>{{ form.surname }}</p>
 	</div>
 	<div class="register_div">
 	    {% if form.name.errors %}<p class="error">{{ form.name.errors }}</p>{% endif %}
