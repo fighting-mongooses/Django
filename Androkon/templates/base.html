@@ -1,12 +1,77 @@
 <html>
 	<head>
+		<style type="text/css">
+			html
+			{
+				min-height: 100%;
+			}
+			body
+			{
+        			background: #c0e2e4;
+				background-image: url('https://twimg0-a.akamaihd.net/profile_images/1260043943/nom_con_2011_by_kitten_chan-d350jvw.jpg');
+				background-repeat: no-repeat;
+				background-position: bottom left;
+			}
+			div
+			{
+				font-family: arial;
+				font-size: 12px;
+				text-align: center;
+			}
+			div.register_div
+			{
+				font-family: arial;
+				font-weight: bold;
+				font-size: 16px;
+			}
+			ul.header
+			{
+				background-color: #AADDDD;
+				width: 100%;
+				margin:0;
+				padding:0;
+				display: inline-block;
+				list-style-type: none;
+			}
+			li
+			{
+				float: left;
+			}
+			a.header
+			{
+				display:block;
+				width: 300px;
+				text-align: center;
+				font-family: arial;
+				font-weight: bold;
+				font-size: 16px;
+				text-decoration: none;
+			}
+			a.header:link,a.header:visited
+			{
+				background-color: #AADDDD;
+				color: #4466AA;
+			}
+			a.header:hover
+			{
+				background-color: #F0F0FF;
+				color: #AAAADD;
+			}
+		</style>
 		{% block extrahead %}
 		{% endblock %}
 	</head>
 	<body>
-	<div id="PageContainer">
-		{% block content %}
-		{% endblock %}
-	</div>
+		<div>
+			<ul class="header">
+				<li><a class="header" href="/login">Login</a></li>
+				<li><a class="header" href="/register">Register</a></li>
+			</ul>
+		</div>
+		<br>
+		<div id="PageContainer">
+			{% block content %}
+			{% endblock %}
+		</div>
 	</body>
 </html>

@@ -1,0 +1,6 @@
+.DS_Store
+andro_data.db
+Androkon/androkon/androkon/settings.py
+*.pyc
+*.swp
+*.swo

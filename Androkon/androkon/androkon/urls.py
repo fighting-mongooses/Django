@@ -17,5 +17,6 @@ urlpatterns = patterns('',
     (r'^login/$', 'con_user.views.LoginRequest'),
     (r'^profile/$', 'con_user.views.Profile'),
     (r'^logout/$', 'con_user.views.LogoutRequest'),
-
+    (r'^json_cons/$', 'conference.views.json_cons'),
+    (r'^json_events/$', 'conference.views.json_events'),
 )
