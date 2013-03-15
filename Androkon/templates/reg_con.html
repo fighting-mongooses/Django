@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+	<form action="" method="post">
+	{% csrf_token %}
+	{% if form.errors %}<p><h1>Please correct the following fields:</h1></p>{% endif %}
+	<div class="register_div">
+	    {% if form.name.errors %}<p class="error">{{ form.name.errors }}</p>{% endif %}
+	    <p><label for="name"{% if form.name.errors %} class="error"{% endif %}>Name:</label></p>
+	    <p>{{ form.name }}</p>
+	</div>
+	<div class="register_div">
+	    {% if form.start_date.errors %}<p class="error">{{ form.start_date.errors }}</p>{% endif %}
+	    <p><label for="start_date"{% if form.start_date.errors %} class="error"{% endif %}>Start Date:</label></p>
+	    <p>{{ form.start_date }}</p>
+	</div>
+	<div class="register_div">
+	    {% if form.end_date.errors %}<p class="error">{{ form.end_date.errors }}</p>{% endif %}
+	    <p><label for="end_date"{% if form.end_date.errors %} class="error"{% endif %}>End Date:</label></p>
+	    <p>{{ form.end_date }}</p>
+	</div>
+	<div class="register_div">
+	    {% if form.description.errors %}<p class="error">{{ form.description.errors }}</p>{% endif %}
+	    <p><label for="description"{% if form.description.errors %} class="error"{% endif %}>Description:</label></p>
+	    <p>{{ form.description }}</p>
+	</div>
+	<div class="register_div">
+	    {% if form.twitter.errors %}<p class="error">{{ form.twitter.errors }}</p>{% endif %}
+	    <p><label for="twitter"{% if form.twitter.errors %} class="error"{% endif %}>Twitter Account Username:</label></p>
+	    <p>{{ form.twitter }}</p>
+	</div>
+	<div class="register_div">
+	    {% if form.website.errors %}<p class="error">{{ form.website.errors }}</p>{% endif %}
+	    <p><label for="website"{% if form.website.errors %} class="error"{% endif %}>Website:</label></p>
+	    <p>{{ form.website }}</p>
+	</div>
+	<div class="register_div">
+	    {% if form.guests.errors %}<p class="error">{{ form.guests.errors }}</p>{% endif %}
+	    <p><label for="guests"{% if form.guests.errors %} class="error"{% endif %}>Guests:</label></p>
+	    <p>{{ form.guests }}</p>
+	</div>
+	<p><input type="submit" alt="register" /></p>
+	</form>
+{% endblock %}
+	

@@ -4,3 +4,11 @@ Androkon/androkon/androkon/settings.py
 *.pyc
 *.swp
 *.swo
+
+.DS_Store
+
+Androkon/androkon/andro_data.db
+
+Androkon/androkon/androkon/urls.pyc
+
+Androkon/templates/edit_con.html

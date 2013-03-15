@@ -5,7 +5,7 @@
 <p>{{ name }}</p>
 {% if cons %}
 	{% for conference in cons %}
-	<p>{{ conference }}</p>
+	<p>{{ conference }} <a href="/edit_con/">Edit</a>   <a href="/delete/">Delete</a></p>
 	{% endfor %}
 {% else %}
 	<p>You have no conferences registered</p>

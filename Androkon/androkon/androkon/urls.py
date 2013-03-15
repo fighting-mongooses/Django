@@ -2,6 +2,8 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from con_user.models import ConAdmin
 from con_user.forms import RegistrationForm
+from conference.forms import ConferenceForm
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -17,6 +19,8 @@ urlpatterns = patterns('',
     (r'^login/$', 'con_user.views.LoginRequest'),
     (r'^profile/$', 'con_user.views.Profile'),
     (r'^logout/$', 'con_user.views.LogoutRequest'),
+    (r'^reg_con/$', 'conference.views.ConferenceRegistration'),
+    (r'^edit_con/$', 'conference.views.ConferenceUpdate'),
     (r'^json_cons/$', 'conference.views.json_cons'),
     (r'^json_events/$', 'conference.views.json_events'),
 )
