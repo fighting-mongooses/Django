@@ -1,6 +1,18 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
+from random import randint
+
+class SignUpKey(models.Model):
+	key =  models.IntegerField(unique = True, help_text="unique key to allow one signup.")
+	date = models.DateTimeField(help_text='Date at which the key was generated.')
+
+	def save(self):
+		super(SignUpKey, self).save()
+
+	def __unicode__(self):
+		return str(self.key)
+	
 
 class ConAdmin(models.Model):
 	user 	= models.OneToOneField(User)

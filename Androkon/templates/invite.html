@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+{%if msg != ""%}
+	Deleted invite {{ msg }}. <a href="../../new/{{msg}}">Undo</a>
+{%endif%}
+<br/>
+{%for i in invs%}
+	<a href="../register/{{i}}">{{ request.get_host }}/register/{{i}}</a> - Created: {{ i.date }} - <a href="delete/{{i}}">Delete</a><br/>
+{%endfor%}
+
+<br/>
+<br/>
+<a href="new/"> Make new invite </a>
+{% endblock %}
