@@ -119,10 +119,9 @@ def ProfileRequest(request, username):
 	return render_to_response('profile.html', context, context_instance=RequestContext(request))
 
 
-@login_required
 def Profile(request):
     if not request.user.is_authenticated():
-        return HrttpResponseRedirect('/login/')
+		return redirect('con_user.views.LoginRequest')
     con_user = request.user.get_profile
     message = "Bottom"
     name = request.user.username

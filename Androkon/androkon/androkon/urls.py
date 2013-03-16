@@ -3,6 +3,7 @@ from django.contrib import admin
 from con_user.models import ConAdmin
 from con_user.forms import RegistrationForm
 from conference.forms import ConferenceForm
+from django.http import HttpResponseRedirect
 
 admin.autodiscover()
 
@@ -15,6 +16,7 @@ urlpatterns = patterns('',
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
+    (r'^$', lambda r : HttpResponseRedirect('profile/')),
     (r'^invite/$', 'con_user.views.Invite', {'msg' : "" }),
     (r'^invite/new/$', 'con_user.views.NewInvite', {'key' : -1 }), # -1 means random key
     (r'^invite/new/(?P<key>\d+)/$', 'con_user.views.NewInvite'),
