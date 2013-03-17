@@ -8,16 +8,50 @@
 	    <p><label for="name"{% if form.name.errors %} class="error"{% endif %}>Name:</label></p>
 	    <p>{{ form.name }}</p>
 	</div>
+
+
 	<div class="register_div">
-	    {% if form.start_date.errors %}<p class="error">{{ form.start_date.errors }}</p>{% endif %}
-	    <p><label for="start_date"{% if form.start_date.errors %} class="error"{% endif %}>Start Date:</label></p>
-	    <p>{{ form.start_date }}</p>
+		{% if form.start_date.errors %}<p class="error">{{ form.start_date.errors }}</p>{% endif %}
+		<p><label for="start_date"{% if form.start_date.errors %} class="error"{% endif %}>Start Date:</label></p>
+
+		<div id="starttime" class="input-append date">
+					{{ form.start_date  }}
+			<span class="add-on">
+				<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+			</span>
+		</div>
+		<script type="text/javascript" src="/static/js/jquery-1.9.1.min.js"></script> 
+		<script type="text/javascript" src="/static/bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/static/js/bootstrap-datetimepicker.min.js"></script>
+		<script type="text/javascript">
+		  $('#starttime').datetimepicker({
+			format: 'dd/MM/yyyy hh:mm:ss',
+			language: 'en-US'
+		  });
+		</script>
 	</div>
+
 	<div class="register_div">
-	    {% if form.end_date.errors %}<p class="error">{{ form.end_date.errors }}</p>{% endif %}
-	    <p><label for="end_date"{% if form.end_date.errors %} class="error"{% endif %}>End Date:</label></p>
-	    <p>{{ form.end_date }}</p>
+		{% if form.end_date.errors %}<p class="error">{{ form.end_date.errors }}</p>{% endif %}
+		<p><label for="start_date"{% if form.end_date.errors %} class="error"{% endif %}>Start Date:</label></p>
+
+		<div id="endtime" class="input-append date">
+					{{ form.end_date  }}
+			<span class="add-on">
+				<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+			</span>
+		</div>
+		<script type="text/javascript" src="/static/js/jquery-1.9.1.min.js"></script> 
+		<script type="text/javascript" src="/static/bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/static/js/bootstrap-datetimepicker.min.js"></script>
+		<script type="text/javascript">
+		  $('#endtime').datetimepicker({
+			format: 'dd/MM/yyyy hh:mm:ss',
+			language: 'en-US'
+		  });
+		</script>
 	</div>
+
 	<div class="register_div">
 	    {% if form.description.errors %}<p class="error">{{ form.description.errors }}</p>{% endif %}
 	    <p><label for="description"{% if form.description.errors %} class="error"{% endif %}>Description:</label></p>

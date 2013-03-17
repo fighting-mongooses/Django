@@ -20,7 +20,14 @@ class Conference(models.Model):
 		return self.name
 
 	def save(self):
-		self.slug = slugify(self.name)
+		baseSlug = slugify(self.name)
+		newSlug = baseSlug
+		num = 1
+		while Conference.objects.filter(slug = newSlug).count():
+			newSlug = baseSlug + str(num)
+			num += 1
+
+		self.slug = newSlug
 		super(Conference, self).save()
 
 	def get_absolute_url(self):

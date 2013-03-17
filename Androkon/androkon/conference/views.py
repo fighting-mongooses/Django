@@ -26,9 +26,11 @@ def ConferenceRegistration(request):
 		return HttpResponseRedirect('/login/')
 	if request.method =='POST':
 		# If they're in the process of filling out a form
-		form = ConferenceForm(request.POST)
+		data = request.POST.copy()
+		data['slug'] = "a" # slugs are handled inside the model, this forces the check to pass
+		form = ConferenceForm(data)
 		if form.is_valid():
-			conference = Conference.objects.create_Conference(
+			conference = Conference(
 				name=form.cleaned_data['name'],
 				description=form.cleaned_data['description'],
 				start_date=form.cleaned_data['start_date'],
@@ -40,6 +42,7 @@ def ConferenceRegistration(request):
 			conference.save()
 			return HttpResponseRedirect('/profile/')
 		else:
+			print form.errors
 			return render_to_response('reg_con.html', {'form': form}, context_instance=RequestContext(request))
 	else:
 		# Show the user a blank registration form

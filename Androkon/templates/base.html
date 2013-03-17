@@ -1,5 +1,8 @@
 <html>
 	<head>
+		<link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    	<link rel="stylesheet" type="text/css" media="screen" href="/static/css/bootstrap-datetimepicker.min.css">
+
 		<style type="text/css">
 			html
 			{
@@ -7,10 +10,14 @@
 			}
 			body
 			{
-        			background: #c0e2e4;
-				background-image: url('https://twimg0-a.akamaihd.net/profile_images/1260043943/nom_con_2011_by_kitten_chan-d350jvw.jpg');
+        		background: #c0e2e4;
+				background-image: url('/static/img/bkg.png');
 				background-repeat: no-repeat;
 				background-position: bottom left;
+			}
+			input
+			{
+				height : 30px;
 			}
 			div
 			{
@@ -60,7 +67,7 @@
 		</style>
 		{% block extrahead %}
 		{% endblock %}
-	</head>
+    	</head>
 	<body>
 		<div>
 			<ul class="header">
