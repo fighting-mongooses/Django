@@ -30,4 +30,5 @@ urlpatterns = patterns('',
     (r'^edit_con/$', 'conference.views.ConferenceUpdate'),
     (r'^json_cons/$', 'conference.views.json_cons'),
     (r'^json_events/$', 'conference.views.json_events'),
+    (r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/img/favicon.ico'}),
 )
