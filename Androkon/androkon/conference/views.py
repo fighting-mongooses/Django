@@ -20,10 +20,10 @@ def json_events(request):
 
 
 def ConferenceRegistration(request):
+	baseUrl = "../"	
 
 	if not request.user.is_authenticated():
-		# If they're already a valid user, send them to their profile page.
-		return HttpResponseRedirect('/login/')
+		return HttpResponseRedirect(baseUrl + 'login/')
 	if request.method =='POST':
 		# If they're in the process of filling out a form
 		data = request.POST.copy()
@@ -40,14 +40,14 @@ def ConferenceRegistration(request):
 				guests=form.cleaned_data['guests'],
 				user=request.user)
 			conference.save()
-			return HttpResponseRedirect('/profile/')
+			return HttpResponseRedirect(baseUrl + 'profile/')
 		else:
-			print form.errors
-			return render_to_response('reg_con.html', {'form': form}, context_instance=RequestContext(request))
+			context = { 'form' : form, 'baseUrl' : baseUrl }
+			return render_to_response('reg_con.html', context, context_instance=RequestContext(request))
 	else:
 		# Show the user a blank registration form
 		form = ConferenceForm()
-		context = {'form': form}
+		context = {'form': form, 'baseUrl' : baseUrl}
 		return render_to_response('reg_con.html', context, context_instance=RequestContext(request))
 
 def ConferenceUpdate(UpdateView):

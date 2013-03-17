@@ -1,7 +1,7 @@
 <html>
 	<head>
-		<link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    	<link rel="stylesheet" type="text/css" media="screen" href="/static/css/bootstrap-datetimepicker.min.css">
+		<link href="{{baseUrl}}static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    	<link rel="stylesheet" type="text/css" media="screen" href="{{baseUrl}}static/css/bootstrap-datetimepicker.min.css">
 
 		<style type="text/css">
 			html
@@ -11,7 +11,7 @@
 			body
 			{
         		background: #c0e2e4;
-				background-image: url('/static/img/bkg.png');
+				background-image: url('{{baseUrl}}static/img/bkg.png');
 				background-repeat: no-repeat;
 				background-position: bottom left;
 			}
@@ -72,16 +72,15 @@
 		<div>
 			<ul class="header">
 				{%if user.is_authenticated%}
-					<li><a class="header" href="/logout">Logout</a></li>
-					<li><a class="header" href="/reg_con">Register Conference</a>
-					<li><a class="header" href="/profile">Profile</a>
+					<li><a class="header" href="{{baseUrl}}logout">Logout</a></li>
+					<li><a class="header" href="{{baseUrl}}reg_con">Register Conference</a>
+					<li><a class="header" href="{{baseUrl}}profile">Profile</a>
 					{%if user.is_superuser%}
-						<li><a class="header" href="/invite">Manage Invites</a>
-						<li><a class="header" href="/admin">Django Admin Page</a>
+						<li><a class="header" href="{{baseUrl}}invite">Manage Invites</a>
 					{%endif%}
 				{%else%}
-					<li><a class="header" href="/login">Login</a></li>
-					<li><a class="header" href="/register">Register</a></li>
+					<li><a class="header" href="{{baseUrl}}login">Login</a></li>
+					<li><a class="header" href="{{baseUrl}}register">Register</a></li>
 				{%endif%}
 			</ul>
 		</div>

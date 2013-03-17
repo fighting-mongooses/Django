@@ -17,11 +17,12 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     (r'^$', lambda r : HttpResponseRedirect('profile/')),
-    (r'^invite/$', 'con_user.views.Invite', {'msg' : "" }),
-    (r'^invite/new/$', 'con_user.views.NewInvite', {'key' : -1 }), # -1 means random key
+    (r'^invite/$', lambda r : HttpResponseRedirect('../invite/0')),
+    (r'^invite/(?P<msg>\d+)/$', 'con_user.views.Invite'),
+    (r'^invite/new/$', lambda r : HttpResponseRedirect('../../invite/new/0')),
     (r'^invite/new/(?P<key>\d+)/$', 'con_user.views.NewInvite'),
     (r'^invite/delete/(?P<key>\d+)/$', 'con_user.views.DeleteInvite'),
-    (r'^register/$', 'con_user.views.ConAdminRegistration', { 'key' : -1 }), # -1 makes sure it's always invalid
+    (r'^register/$', lambda r : HttpResponseRedirect('../register/0')),
     (r'^register/(?P<key>\d+)/$', 'con_user.views.ConAdminRegistration'),
     (r'^login/$', 'con_user.views.LoginRequest'),
     (r'^profile/$', 'con_user.views.Profile'),

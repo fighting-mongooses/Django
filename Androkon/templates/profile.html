@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-<p><a href="/logout/">Logout</a></p>
+<p><a href="{{baseUrl}}logout/">Logout</a></p>
 <p>{{ message }}</p>
 <p>{{ name }}</p>
 {% if cons %}
 	{% for conference in cons %}
-	<p>{{ conference }} <a href="/edit_con/">Edit</a>   <a href="/delete/">Delete</a></p>
+	<p>{{ conference }} <a href="{{baseUrl}}edit_con/">Edit</a>   <a href="{{baseUrl}}delete/">Delete</a></p>
 	{% endfor %}
 {% else %}
 	<p>You have no conferences registered</p>

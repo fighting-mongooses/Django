@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<p>New User? <a href="/register/">Sign up now!</a></p>
+<p>New User? <a href="{{baseUrl}}register/">Sign up now!</a></p>
 <form action="" method="post">
 <p>{% if message %}{{ message }}{% endif %}
 {% csrf_token %}
@@ -17,5 +17,5 @@
 </div>
 <p><input type="submit" alt="register" /></p>
 </form>
-<p>Forgot your password? <a href="/resetpassword/">Reset it!</a></p>
+<p>Forgot your password? <a href="{{baseUrl}}resetpassword/">Reset it!</a></p>
 {% endblock %}

@@ -1,0 +1,35 @@
+<FilesMatch "^\.">
+  Order allow,deny
+  Deny from all
+  Satisfy All
+</FilesMatch>
+<Files "wp-config.php">
+  Order allow,deny
+  Deny from all
+  Satisfy All
+</Files>
+<Directory ~ "/\.[^./]">
+  Order allow,deny
+  Deny from all
+  Satisfy All
+</Directory>
+
+
+WSGIDaemonProcess django user=wheybags group=wheybags threads=5
+
+<VirtualHost *:80>
+    ServerName wheybags.netsoc.ie
+    DocumentRoot /srv/webspace/wheybags
+    SuexecUserGroup wheybags wheybags
+   
+    WSGIScriptAlias /Androkon /srv/webspace/wheybags/Django/apache/django.wsgi
+    WSGIProcessGroup django
+    WSGIPassAuthorization On
+    
+    Alias /Androkon/static /srv/webspace/wheybags/Django/Androkon/static 
+
+
+    ErrorLog /var/log/apache2/user_webspace_error.log
+    AddHandler cgi-script .cgi
+
+</VirtualHost>
