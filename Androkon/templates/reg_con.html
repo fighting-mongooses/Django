@@ -33,7 +33,7 @@
 
 	<div class="register_div">
 		{% if form.end_date.errors %}<p class="error">{{ form.end_date.errors }}</p>{% endif %}
-		<p><label for="start_date"{% if form.end_date.errors %} class="error"{% endif %}>Start Date:</label></p>
+		<p><label for="start_date"{% if form.end_date.errors %} class="error"{% endif %}>End Date:</label></p>
 
 		<div id="endtime" class="input-append date">
 					{{ form.end_date  }}
