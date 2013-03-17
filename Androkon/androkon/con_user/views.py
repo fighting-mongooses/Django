@@ -17,7 +17,8 @@ def Invite(request, msg):
 	if request.user.is_superuser:
 		context = { 'invs' : SignUpKey.objects.all(), 'msg' : msg, 'baseUrl' : baseUrl}
 		return render_to_response('invite.html', context, context_instance=RequestContext(request))
-	return render_to_response('denied.html')
+	context = {'baseUrl' : baseUrl }
+	return render_to_response('denied.html', context, context_instance=RequestContext(request))
 
 
 def NewInvite(request, key):
@@ -42,11 +43,12 @@ def NewInvite(request, key):
 def DeleteInvite(request, key):
 	key = int(key)
 	baseUrl = "../../../"
-
-	for k in SignUpKey.objects.all():
-		if k.key == key:
-			k.delete()
-			return HttpResponseRedirect(baseUrl + "invite/" + str(key))
+	
+	if request.user.is_superuser:
+		for k in SignUpKey.objects.all():
+			if k.key == key:
+				k.delete()
+				return HttpResponseRedirect(baseUrl + "invite/" + str(key))
 
 	return HttpResponseRedirect(baseUrl + 'invite')
 
@@ -61,7 +63,9 @@ def ConAdminRegistration(request, key):
 
 			if request.user.is_authenticated():
 				# If they're already a valid user, send them to their profile page.
-				return HttpResponseRedirect(baseUrl + 'profile/')
+				context = {'message' : 'You are already signed in. Send a link to this page to someone to let the sign up.', 'baseUrl' : baseUrl}	
+				return render_to_response('denied.html', context, context_instance=RequestContext(request))
+
 			if request.method =='POST':
 				# If they're in the process of filling out a form
 				form = RegistrationForm(request.POST)
