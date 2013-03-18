@@ -40,7 +40,7 @@
 				display: inline-block;
 				list-style-type: none;
 			}
-			li
+			li.topbar
 			{
 				float: left;
 			}
@@ -72,15 +72,15 @@
 		<div>
 			<ul class="header">
 				{%if user.is_authenticated%}
-					<li><a class="header" href="{{baseUrl}}logout">Logout</a></li>
-					<li><a class="header" href="{{baseUrl}}reg_con">Register Conference</a>
-					<li><a class="header" href="{{baseUrl}}profile">Profile</a>
+					<li class="topbar"><a class="header" href="{{baseUrl}}logout">Logout</a></li>
+					<li class="topbar"><a class="header" href="{{baseUrl}}reg_con">Register Conference</a>
+					<li class="topbar"><a class="header" href="{{baseUrl}}profile">Profile</a>
 					{%if user.is_superuser%}
-						<li><a class="header" href="{{baseUrl}}invite">Manage Invites</a>
+						<li class="topbar"><a class="header" href="{{baseUrl}}invite">Manage Invites</a>
 					{%endif%}
 				{%else%}
-					<li><a class="header" href="{{baseUrl}}login">Login</a></li>
-					<li><a class="header" href="{{baseUrl}}register">Register</a></li>
+					<li class="topbar"><a class="header" href="{{baseUrl}}login">Login</a></li>
+					<li class="topbar"><a class="header" href="{{baseUrl}}register">Register</a></li>
 				{%endif%}
 			</ul>
 		</div>
