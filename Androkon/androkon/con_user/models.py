@@ -37,4 +37,4 @@ post_save.connect(create_conadmin_user_callback, User)
 
 
 '''  c = ConAdmin(name="Tom", surname="Gregg", username="tom123", password="asdf", password1="asdf", email="tom1234@gmail.com") '''
-''' c = ConAdmin(name="Tom", surname="Gregg") '''
+'''  c = ConAdmin(name="Tom", surname="Gregg") '''

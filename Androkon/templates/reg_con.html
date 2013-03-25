@@ -8,8 +8,6 @@
 	    <p><label for="name"{% if form.name.errors %} class="error"{% endif %}>Name:</label></p>
 	    <p>{{ form.name }}</p>
 	</div>
-
-
 	<div class="register_div">
 		{% if form.start_date.errors %}<p class="error">{{ form.start_date.errors }}<br/></p>{% endif %}
 		<p><label for="start_date"{% if form.start_date.errors %} class="error"{% endif %}>Start Date:</label></p>

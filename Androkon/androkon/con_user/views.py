@@ -135,14 +135,9 @@ def ProfileRequest(request, username):
 
 
 def Profile(request):
-	baseUrl = "../"
-
-	if not request.user.is_authenticated():
-		return HttpResponseRedirect(baseUrl + "login/")
-	con_user = request.user.get_profile
-	message = "Bottom"
-	name = request.user.username
-	cons = Conference.objects.all().filter(user = request.user)
-	context = {'con_user': con_user, 'message': message,
-		 'name': name, 'cons': cons, 'baseUrl' : baseUrl}
-	return render_to_response('profile.html', context, context_instance=RequestContext(request))
+    if not request.user.is_authenticated():
+        return HrttpResponseRedirect('/login/')
+    con_user = request.user.get_profile
+    cons = Conference.objects.all().filter(user = request.user)
+    context = {'con_user': con_user, 'cons': cons}
+    return render_to_response('profile.html', context, context_instance=RequestContext(request))

@@ -6,6 +6,7 @@ from django.core import serializers
 from django.http import HttpResponse
 from conference.forms import ConferenceForm
 from django.views.generic import UpdateView
+from django.template.defaultfilters import slugify
 
 #def profile(request):
 #	entries = Conference.objects.get(user= )
@@ -47,11 +48,5 @@ def ConferenceRegistration(request):
 	else:
 		# Show the user a blank registration form
 		form = ConferenceForm()
-		context = {'form': form, 'baseUrl' : baseUrl}
+		context = {'form': form}
 		return render_to_response('reg_con.html', context, context_instance=RequestContext(request))
-
-def ConferenceUpdate(UpdateView):
-    model = Conference
-    form_class = ConferenceForm
-    template_name = 'reg_con.html'
-    success_url = '/profile/'

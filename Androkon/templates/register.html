@@ -5,30 +5,29 @@
 	{% if form.errors %}<p><h1>Please correct the following fields:</h1></p>{% endif %}
 	<div class="register_div">
 	    {% if form.username.errors %}<p class="error">{{ form.username.errors }}</p>{% endif %}
-	    <p><label for="username"{% if form.username.errors %} class="error"{% endif %}>Username:</label></p>
+	    <p><label for="username"{% if form.username.errors %} class="error"{% endif %}><br/>Username:</label></p>
 	    <p>{{ form.username }}</p>
 	</div>
 	<div class="register_div">
 	    {% if form.email.errors %}<p class="error">{{ form.email.errors }}</p>{% endif %}
-	    <p><label for="email"{% if form.email.errors %} class="error"{% endif %}>Email:</label></p>
+	    <p><label for="email"{% if form.email.errors %} class="error"{% endif %}><br/>Email:</label></p>
 	    <p>{{ form.email }}</p>
 	</div>
 	<div class="register_div">
 	    {% if form.password.errors %}<p class="error">{{ form.password.errors }}</p>{% endif %}
-	    <p><label for="password"{% if form.password.errors %} class="error"{% endif %}>Password:</label></p>
+	    <p><label for="password"{% if form.password.errors %} class="error"{% endif %}><br/>Password:</label></p>
 	    <p>{{ form.password }}</p>
 	</div>
 	<div class="register_div">
 	    {% if form.password1.errors %}<p class="error">{{ form.password1.errors }}</p>{% endif %}
-	    <p><label for="password1"{% if form.password1.errors %} class="error"{% endif %}>Verify Password:</label></p>
+	    <p><label for="password1"{% if form.password1.errors %} class="error"{% endif %}><br/>Verify Password:</label></p>
 	    <p>{{ form.password1 }}</p>
 	</div>
 	<div class="register_div">
 	    {% if form.name.errors %}<p class="error">{{ form.name.errors }}</p>{% endif %}
-	    <p><label for="name"{% if form.name.errors %} class="error"{% endif %}>Name:</label></p>
+	    <p><label for="name"{% if form.name.errors %} class="error"{% endif %}><br/>Name:</label></p>
 	    <p>{{ form.name }}</p>
 	</div>
 	<p><input type="submit" alt="register" /></p>
 	</form>
 {% endblock %}
-	

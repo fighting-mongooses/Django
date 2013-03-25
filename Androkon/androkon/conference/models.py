@@ -6,7 +6,6 @@ class Conference(models.Model):
 
 	# Core fields:
 	name 		= models.CharField(max_length=100, help_text='The name of the conference. Maximum 100 characters.')
-	slug 		= models.SlugField(unique=True)
 	description = models.TextField(help_text='A description of the conference.')
 	start_date 	= models.DateTimeField(help_text='Start date and time for the conference.')
 	end_date 	= models.DateTimeField(help_text='End date and time for the conference.')
