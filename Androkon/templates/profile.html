@@ -6,6 +6,6 @@
 	<p>{{ conference }} <a href="{{baseUrl}}edit_con/">Edit</a>   <a href="{{baseUrl}}delete/">Delete</a></p>
 	{% endfor %}
 {% else %}
-	<p>You have no conferences registered. <a href="/reg_con/">Add one now</a></p>
+	<p>You have no conferences registered. <a href="{{baseUrl}}reg_con/">Add one now</a></p>
 {% endif %}
 {% endblock %}
