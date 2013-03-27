@@ -3,7 +3,8 @@
 <p><a href="{{baseUrl}}logout/">Logout</a></p>
 {% if cons %}
 	{% for conference in cons %}
-	<p>{{ conference }} <a href="{{baseUrl}}edit_con/">Edit</a>   <a href="{{baseUrl}}delete/">Delete</a></p>
+	<p>{% if not conference.enabled %} <strike> {% endif %} {{ conference }} <a href="{{baseUrl}}edit_con/">Edit</a>   
+	{% if not conference.enabled %} </strike> Deleted - <a href="{{baseUrl}}restore_con/{{conference.id}}">Restore</a>{% else %} <a href="{{baseUrl}}delete_con/{{conference.id}}">Delete</a>{% endif %}</p>
 	{% endfor %}
 {% else %}
 	<p>You have no conferences registered. <a href="{{baseUrl}}reg_con/">Add one now</a></p>

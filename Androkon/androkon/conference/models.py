@@ -12,6 +12,7 @@ class Conference(models.Model):
 	twitter 	= models.CharField(max_length=50, help_text='The twitter account of the conference')
 	website     = models.URLField(help_text='The website of the conference')
 	guests		= models.TextField(help_text='A description of any guest speakers attending the conference', blank=True)
+	enabled     = models.BooleanField(help_text='Whether or not this conference is to be displayed to users', default=True)
 	# Meta data:
 	user = models.ForeignKey(User)
 

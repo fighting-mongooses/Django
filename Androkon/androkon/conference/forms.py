@@ -15,4 +15,4 @@ class ConferenceForm(ModelForm):
 
 	class Meta:
 		model = Conference
-		exclude = ('user',)
+		exclude = ('user', 'enabled')

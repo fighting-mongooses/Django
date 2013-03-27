@@ -12,7 +12,7 @@ from django.template.defaultfilters import slugify
 #	entries = Conference.objects.get(user= )
 
 def json_cons(request):
-    json = serializers.serialize("json", Conference.objects.all())
+    json = serializers.serialize("json", Conference.objects.filter(enabled = True))
     return HttpResponse(json, mimetype='application/json')
 
 def json_events(request):
@@ -50,3 +50,38 @@ def ConferenceRegistration(request):
 		form = ConferenceForm()
 		context = {'form': form, 'baseUrl': baseUrl}
 		return render_to_response('reg_con.html', context, context_instance=RequestContext(request))
+
+def DeleteCon(request, key):
+    baseUrl = "../../"
+    
+    try:
+        con = Conference.objects.get(pk=key)
+    except Conference.DoesNotExist:
+        context = {'baseUrl': baseUrl, 'message': 'Invalid con id.'}
+        return render_to_response('denied.html', context, context_instance=RequestContext(request))
+        
+    if request.user == con.user or request.user.is_superuser:
+        con.enabled = False
+        con.save()
+        return HttpResponseRedirect(baseUrl + "profile/")
+    else:
+        context = {'baseUrl': baseUrl, 'message': 'You do not have permission to delete this conference.'}
+        return render_to_response('denied.html', context, context_instance=RequestContext(request))
+
+
+def RestoreCon(request, key):
+    baseUrl = "../../"
+    
+    try:
+        con = Conference.objects.get(pk=key)
+    except Conference.DoesNotExist:
+        context = {'baseUrl': baseUrl, 'message': 'Invalid con id.'}
+        return render_to_response('denied.html', context, context_instance=RequestContext(request))
+        
+    if request.user == con.user or request.user.is_superuser:
+        con.enabled = True
+        con.save()
+        return HttpResponseRedirect(baseUrl + "profile/")
+    else:
+        context = {'baseUrl': baseUrl, 'message': 'You do not have permission to delete this conference.'}
+        return render_to_response('denied.html', context, context_instance=RequestContext(request))
