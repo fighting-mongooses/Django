@@ -5,8 +5,16 @@
 {%endif%}
 <br/>
 {%for i in invs%}
-	<a href="{{baseUrl}}register/{{i}}">{{i}}</a> - Created: {{ i.date }} - <a href="{{baseUrl}}invite/delete/{{i}}">Delete</a><br/>
+	<a class="invite" href="{{baseUrl}}register/{{i}}">{{i}}</a> - Created: {{ i.date }} - <a href="{{baseUrl}}invite/delete/{{i}}">Delete</a><br/>
 {%endfor%}
+
+<script type="text/javascript">
+var anchors = document.getElementsByTagName("A");
+for (var i = 0; i < anchors.length; i++) {
+	if(anchors[i].className == "invite")
+		anchors[i].innerHTML = anchors[i].href;
+}
+</script>
 
 <br/>
 <br/>
