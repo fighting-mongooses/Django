@@ -4,6 +4,7 @@ from con_user.models import ConAdmin
 from con_user.forms import RegistrationForm
 from conference.forms import ConferenceForm
 from django.http import HttpResponseRedirect
+import random
 
 admin.autodiscover()
 
