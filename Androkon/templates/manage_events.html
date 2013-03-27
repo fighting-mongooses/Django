@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% if events %}
+	<h3>Events for {{con.name}}</h3>
+	{%for e in events%}
+		{%if not e.enabled%}
+			<strike>
+		{% endif %}
+		
+		{{e.name}} 
+		
+		{% if e.enabled %}
+			<form action="{{baseUrl}}edit_event/{{e.id}}" class="prettybutton">  <input type="submit" value="Edit" class="prettybutton"> </form> 
+			<form action="{{baseUrl}}delete_event/{{e.id}}" class="prettybutton">  <input type="submit" value="Delete" class="prettybutton"> </form> 
+		{% else %}
+			</strike>
+			&nbsp;<form action="{{baseUrl}}restore_event/{{e.id}}" class="prettybutton">  <input type="submit" value="Restore" class="prettybutton"> </form> 
+		{% endif %}
+		<br/>
+		<br/>
+
+	{%endfor%}
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<a href={{baseUrl}}add_event/{{con.id}}>Create new Event</a>
+{% else %}
+	This con has no events. <a href={{baseUrl}}add_event/{{con.id}}>Add one</a>
+{% endif %}
+
+{% endblock %}

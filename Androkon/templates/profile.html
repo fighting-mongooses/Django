@@ -4,7 +4,8 @@
 {% if cons %}
 	{% for conference in cons %}
 	<p>{% if not conference.enabled %} <strike> {% endif %} {{ conference }} <a href="{{baseUrl}}edit_con/{{conference.id}}">Edit</a>   
-	{% if not conference.enabled %} </strike> Deleted - <a href="{{baseUrl}}restore_con/{{conference.id}}">Restore</a>{% else %} <a href="{{baseUrl}}delete_con/{{conference.id}}">Delete</a>{% endif %}</p>
+	{% if not conference.enabled %} </strike> Deleted - <a href="{{baseUrl}}restore_con/{{conference.id}}">Restore</a>{% else %} 
+	<a href="{{baseUrl}}manage_events/{{conference.id}}">Manage Events</a> <a href="{{baseUrl}}delete_con/{{conference.id}}">Delete</a>{% endif %}</p>
 	{% endfor %}
 {% else %}
 	<p>You have no conferences registered. <a href="{{baseUrl}}reg_con/">Add one now</a></p>

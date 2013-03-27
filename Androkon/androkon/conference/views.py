@@ -4,7 +4,7 @@ from django.template import RequestContext
 from conference.models import Conference, Event
 from django.core import serializers
 from django.http import HttpResponse
-from conference.forms import ConferenceForm
+from conference.forms import *
 from django.views.generic import UpdateView
 from django.template.defaultfilters import slugify
 
@@ -16,7 +16,7 @@ def json_cons(request):
 	return HttpResponse(json, mimetype='application/json')
 
 def json_events(request):
-	json = serializers.serialize("json", Event.objects.all())
+	json = serializers.serialize("json", Event.objects.filter(enabled = True))
 	return HttpResponse(json, mimetype='application/json')
 
 
@@ -124,6 +124,134 @@ def RestoreCon(request, key):
 		con.save()
 		return HttpResponseRedirect(baseUrl + "profile/")
 	else:
-		context = {'baseUrl': baseUrl, 'message': 'You do not have permission to delete this conference.'}
+		context = {'baseUrl': baseUrl, 'message': 'You do not have permission to modify this conference.'}
 		return render_to_response('denied.html', context, context_instance=RequestContext(request))
+
+
+def ManageEvents(request, key):
+	baseUrl = "../../"
+
+	try:
+		con = Conference.objects.get(pk=key)
+	except Conference.DoesNotExist:
+		context = {'baseUrl': baseUrl, 'message': 'Invalid con id.'}
+		return render_to_response('denied.html', context, context_instance=RequestContext(request))
+		
+	if request.user == con.user or request.user.is_superuser:
+		context = {'baseUrl': baseUrl, 'events': Event.objects.filter(conference = con), 'con': con}
+		return render_to_response('manage_events.html', context, context_instance=RequestContext(request))
+
+	else:
+		context = {'baseUrl': baseUrl, 'message': 'You do not have permission to modify this conference.'}
+		return render_to_response('denied.html', context, context_instance=RequestContext(request))
+
+
+def AddEvent(request, key):
+	baseUrl = "../../"
+
+	try:
+		con = Conference.objects.get(pk=key)
+	except Conference.DoesNotExist:
+		context = {'baseUrl': baseUrl, 'message': 'Invalid con id.'}
+		return render_to_response('denied.html', context, context_instance=RequestContext(request))
+		
+	if request.user == con.user or request.user.is_superuser:
+
+		if request.method =='POST':
+			form = EventForm(request.POST)
+			if form.is_valid():
+				event = Event(
+					name = form.cleaned_data['name'],
+					description = form.cleaned_data['description'],
+					time = form.cleaned_data['time'],
+					conference = con,
+					)
+
+				event.save()
+				return HttpResponseRedirect(baseUrl+'manage_events/'+str(event.conference.id)+"/")
+			else:
+				context = {'baseUrl': baseUrl, 'form': form}
+				return render_to_response('create_event.html', context, context_instance=RequestContext(request))
+
+		else:
+			form = EventForm()
+			context = {'baseUrl': baseUrl, 'form': form}
+			return render_to_response('create_event.html', context, context_instance=RequestContext(request))
+
+	else:
+		context = {'baseUrl': baseUrl, 'message': 'You do not have permission to dmodify this conference'}
+		return render_to_response('denied.html', context, context_instance=RequestContext(request))
+
+
+def EditEvent(request, key):
+	baseUrl = "../../"
+
+	try:
+		event = Event.objects.get(pk=key)
+	except Event.DoesNotExist:
+		context = {'baseUrl': baseUrl, 'message': 'Invalid event id.'}
+		return render_to_response('denied.html', context, context_instance=RequestContext(request))
+		
+	if request.user == event.conference.user or request.user.is_superuser:
+
+		if request.method =='POST':
+			form = EventForm(request.POST)
+			if form.is_valid():
+				event.name = form.cleaned_data['name']
+				event.description = form.cleaned_data['description']
+				event.time = form.cleaned_data['time']
+
+				event.save()
+				return HttpResponseRedirect(baseUrl+'manage_events/'+str(event.conference.id)+"/")
+			else:
+				context = {'baseUrl': baseUrl, 'form': form}
+				return render_to_response('create_event.html', context, context_instance=RequestContext(request))
+
+		else:
+			form = EventForm({'name': event.name, 'description': event.description, 'time': event.time})
+			context = {'baseUrl': baseUrl, 'form': form}
+			return render_to_response('create_event.html', context, context_instance=RequestContext(request))
+
+	else:
+		context = {'baseUrl': baseUrl, 'message': 'You do not have permission to modify this event.'}
+		return render_to_response('denied.html', context, context_instance=RequestContext(request))
+
+   
+def DeleteEvent(request, key):
+	baseUrl = "../../"
+	
+	try:
+		event = Event.objects.get(pk=key)
+	except Event.DoesNotExist:
+		context = {'baseUrl': baseUrl, 'message': 'Invalid event id.'}
+		return render_to_response('denied.html', context, context_instance=RequestContext(request))
+		
+	if request.user == event.conference.user or request.user.is_superuser:
+		event.enabled = False
+		event.save()
+		return HttpResponseRedirect(baseUrl + "manage_events/" + str(event.conference.id))  
+	else:
+		context = {'baseUrl': baseUrl, 'message': 'You do not have permission to delete this event.'}
+		return render_to_response('denied.html', context, context_instance=RequestContext(request))
+
+
+
+def RestoreEvent(request, key):
+	baseUrl = "../../"
+	
+	try:
+		event = Event.objects.get(pk=key)
+	except Event.DoesNotExist:
+		context = {'baseUrl': baseUrl, 'message': 'Invalid event id.'}
+		return render_to_response('denied.html', context, context_instance=RequestContext(request))
+		
+	if request.user == event.conference.user or request.user.is_superuser:
+		event.enabled = True
+		event.save()
+		return HttpResponseRedirect(baseUrl + "manage_events/" + str(event.conference.id))  
+	else:
+		context = {'baseUrl': baseUrl, 'message': 'You do not have permission to modify this event.'}
+		return render_to_response('denied.html', context, context_instance=RequestContext(request))
+
+
 

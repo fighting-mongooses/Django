@@ -37,16 +37,16 @@ class Conference(models.Model):
 class Event(models.Model):
 
 	name 		= models.CharField(max_length="50", help_text="The name of the event. Maximum 50 characters.")
-	slug 		= models.SlugField(unique=True)
 	description = models.TextField(help_text="A description of the event.")
 	time 		= models.DateTimeField(help_text="Time and date for the event")
 	conference 	= models.ForeignKey(Conference)
+	enabled     = models.BooleanField(help_text='Whether or not this event is to be displayed to users', default=True)
+
 
 	def __unicode__(self):
 		return self.name
 
 	def save(self):
-		self.slug = slugify(self.name)
 		super(Event, self).save()
 
 	def get_absolute_url(self):

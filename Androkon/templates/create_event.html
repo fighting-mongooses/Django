@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+
+	<form action="" method="post">
+	{% csrf_token %}
+
+	{% if form.errors %}<p><h1>Please correct the following fields:</h1></p>{% endif %}
+	<div class="register_div">
+	    {% if form.name.errors %}<p class="error">{{ form.name.errors }}<br/></p>{% endif %}
+	    <p><label for="name"{% if form.name.errors %} class="error"{% endif %}>Name:</label></p>
+	    <p>{{ form.name }}</p>
+	</div>
+
+	<div class="register_div">
+	    {% if form.description.errors %}<p class="error">{{ form.description.errors }}<br/></p>{% endif %}
+	    <p><label for="description"{% if form.description.errors %} class="error"{% endif %}>Description:</label></p>
+	    <p>{{ form.description }}</p>
+	</div>
+
+	<div class="register_div">
+		{% if form.time.errors %}<p class="error">{{ form.time.errors }}<br/></p>{% endif %}
+		<p><label for="start_date"{% if form.time.errors %} class="error"{% endif %}>Time / Date:</label></p>
+
+		<div id="time" class="input-append date">
+					{{ form.time  }}
+			<span class="add-on">
+				<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+			</span>
+		</div>
+		<script type="text/javascript" src="{{baseUrl}}static/js/jquery-1.9.1.min.js"></script> 
+		<script type="text/javascript" src="{{baseUrl}}static/bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="{{baseUrl}}static/js/bootstrap-datetimepicker.min.js"></script>
+		<script type="text/javascript">
+		  $('#time').datetimepicker({
+			format: 'dd/MM/yyyy hh:mm:ss',
+			language: 'en-US'
+		  });
+		</script>
+	</div>
+	
+	<p><input type="submit" alt="register" /></p>
+	</form>
+
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+
+{% endblock %}
