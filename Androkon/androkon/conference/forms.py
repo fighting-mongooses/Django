@@ -13,6 +13,8 @@ class ConferenceForm(ModelForm):
 	website		= forms.URLField(label=(u'Website for the Conference'))
 	guests		= forms.CharField(label=(u'Description of guest speakers or special guests attending the event'), widget=forms.Textarea(), required=False)
 
+	#pictures 	= forms.ImageField(widget=forms.FileInput())
+
 	class Meta:
 		model = Conference
 		exclude = ('user', 'enabled')

@@ -126,12 +126,12 @@ def LogoutRequest(request):
 	logout(request)
 	return HttpResponseRedirect(baseUrl + 'login/')	
 
-def ProfileRequest(request, username):
-	user = User.objects.get(username=username)
-	conuser = request.user.get_profile
-	message = "Hey, there"
-	context = {'conuser': conuser, 'user': user, 'username': username, 'message': message}
-	return render_to_response('profile.html', context, context_instance=RequestContext(request))
+# def ProfileRequest(request, username):
+# 	user = User.objects.get(username=username)
+# 	conuser = request.user.get_profile
+# 	message = "Hey, there"
+# 	context = {'conuser': conuser, 'user': user, 'username': username, 'message': message}
+# 	return render_to_response('profile.html', context, context_instance=RequestContext(request))
 
 
 def Profile(request):

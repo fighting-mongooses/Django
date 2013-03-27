@@ -13,6 +13,7 @@ class Conference(models.Model):
 	website     = models.URLField(help_text='The website of the conference')
 	guests		= models.TextField(help_text='A description of any guest speakers attending the conference', blank=True)
 	enabled     = models.BooleanField(help_text='Whether or not this conference is to be displayed to users', default=True)
+
 	# Meta data:
 	user = models.ForeignKey(User)
 
@@ -51,3 +52,9 @@ class Event(models.Model):
 
 	def get_absolute_url(self):
 		return "%s/" % self.slug
+
+
+# class PhotoUpload(models.Model):
+
+# 	picture = models.ImageField(upload_to='/Users/ciaranegan/Django/Androkon/static/media/')
+# 	con 	 = models.ForeignKey(Conference)

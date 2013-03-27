@@ -40,4 +40,8 @@ urlpatterns = patterns('',
 	(r'^json_cons/$', 'conference.views.json_cons'),
 	(r'^json_events/$', 'conference.views.json_events'),
 	(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/img/favicon.ico'}),
+    (r'^resetpassword/passwordsent/$', 'django.contrib.auth.views.password_reset_done'),
+    (r'^resetpassword/$', 'django.contrib.auth.views.password_reset'),
+    (r'^reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm'),
+    (r'^reset/done/$', 'django.contrib.auth.views.password_reset_complete'),
 	)

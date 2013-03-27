@@ -41,6 +41,7 @@ def ConferenceRegistration(request):
 				guests=form.cleaned_data['guests'],
 				user=request.user)
 			conference.save()
+			#pic = PhotoUpload(con = conference, picture=form.cleaned_data['pictures'])
 			return HttpResponseRedirect(baseUrl + 'profile/')
 		else:
 			context = { 'form' : form, 'baseUrl' : baseUrl }
