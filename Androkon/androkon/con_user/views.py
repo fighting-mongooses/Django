@@ -122,7 +122,7 @@ def LoginRequest(request):
 		return render_to_response('login.html', context, context_instance=RequestContext(request))
 
 def LogoutRequest(request):
-	baseUrl = "../"
+	baseUrl = "/"
 	logout(request)
 	return HttpResponseRedirect(baseUrl + 'login/')	
 
