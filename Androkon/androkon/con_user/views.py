@@ -140,6 +140,9 @@ def Profile(request):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect(baseUrl + 'login/')
 	con_user = request.user.get_profile
-	cons = Conference.objects.all().filter(user = request.user)
+	if request.user.is_superuser:
+		cons = Conference.objects.all()
+	else:
+		cons = Conference.objects.all().filter(user = request.user)
 	context = {'con_user': con_user, 'cons': cons, 'baseUrl': baseUrl}
 	return render_to_response('profile.html', context, context_instance=RequestContext(request))

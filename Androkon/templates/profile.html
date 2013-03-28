@@ -3,7 +3,12 @@
 {% if cons %}
 	<h3>Your Conferences:</h3>
 	{% for conference in cons %}
-	{% if not conference.enabled %} <strike> {% endif %} {{ conference }}    
+	{% if not conference.enabled %} <strike> {% endif %} {{ conference }}
+	
+	{% if request.user.is_superuser and request.user != conference.user %} 
+		(User: {{conference.user}}) 
+	{% endif %}
+	
 	{% if not conference.enabled %} </strike> Deleted - 
 		<form action="{{baseUrl}}restore_con/{{conference.id}}" class="prettybutton">  <input type="submit" value="Restore" class="prettybutton"> </form> 
 	{% else %} 
