@@ -110,6 +110,25 @@ def DeleteCon(request, key):
 		context = {'baseUrl': baseUrl, 'message': 'You do not have permission to delete this conference.'}
 		return render_to_response('denied.html', context, context_instance=RequestContext(request))
 
+def NukeCon(request, key):
+	baseUrl = "../../"
+	
+	try:
+		con = Conference.objects.get(pk=key)
+	except Conference.DoesNotExist:
+		context = {'baseUrl': baseUrl, 'message': 'Invalid con id.'}
+		return render_to_response('denied.html', context, context_instance=RequestContext(request))
+		
+	if request.user == con.user or request.user.is_superuser:
+		for e in Event.objects.all().filter(conference = con):
+			e.delete()
+		con.delete()	
+		return HttpResponseRedirect(baseUrl + "profile/")
+	else:
+		context = {'baseUrl': baseUrl, 'message': 'You do not have permission to delete this conference.'}
+		return render_to_response('denied.html', context, context_instance=RequestContext(request))
+
+
 
 def RestoreCon(request, key):
 	baseUrl = "../../"
@@ -234,6 +253,23 @@ def DeleteEvent(request, key):
 	else:
 		context = {'baseUrl': baseUrl, 'message': 'You do not have permission to delete this event.'}
 		return render_to_response('denied.html', context, context_instance=RequestContext(request))
+
+def NukeEvent(request, key):
+	baseUrl = "../../"
+	
+	try:
+		event = Event.objects.get(pk=key)
+	except Event.DoesNotExist:
+		context = {'baseUrl': baseUrl, 'message': 'Invalid event id.'}
+		return render_to_response('denied.html', context, context_instance=RequestContext(request))
+		
+	if request.user == event.conference.user or request.user.is_superuser:
+		event.delete()
+		return HttpResponseRedirect(baseUrl + "manage_events/" + str(event.conference.id))  
+	else:
+		context = {'baseUrl': baseUrl, 'message': 'You do not have permission to delete this event.'}
+		return render_to_response('denied.html', context, context_instance=RequestContext(request))
+
 
 
 

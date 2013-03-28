@@ -11,6 +11,7 @@
 	
 	{% if not conference.enabled %} </strike> Deleted - 
 		<form action="{{baseUrl}}restore_con/{{conference.id}}" class="prettybutton">  <input type="submit" value="Restore" class="prettybutton"> </form> 
+		<form action="{{baseUrl}}nuke_con/{{conference.id}}" class="prettybutton">  <input type="submit" value="Fully delete (irreversible)" class="prettybutton"> </form> 
 	{% else %} 
 
 	<form action="{{baseUrl}}edit_con/{{conference.id}}" class="prettybutton">  <input type="submit" value="Edit" class="prettybutton"> </form> 

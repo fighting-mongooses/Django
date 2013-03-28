@@ -16,6 +16,7 @@
 		{% else %}
 			</strike>
 			&nbsp;<form action="{{baseUrl}}restore_event/{{e.id}}" class="prettybutton">  <input type="submit" value="Restore" class="prettybutton"> </form> 
+			<form action="{{baseUrl}}nuke_event/{{e.id}}" class="prettybutton">  <input type="submit" value="Fully Delete (irreversible)" class="prettybutton"> </form> 
 		{% endif %}
 		<br/>
 		<br/>
