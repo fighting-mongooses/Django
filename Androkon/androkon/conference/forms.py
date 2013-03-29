@@ -12,6 +12,7 @@ class ConferenceForm(ModelForm):
 	twitter		= forms.CharField(label=(u'Username of the Twitter account associated with the event'))
 	website		= forms.URLField(label=(u'Website for the Conference'))
 	guests		= forms.CharField(label=(u'Description of guest speakers or special guests attending the event'), widget=forms.Textarea(), required=False)
+	gmaps 		= forms.CharField(label=(u'Google maps link'), required=False)
 
 	#pictures 	= forms.ImageField(widget=forms.FileInput())
 
@@ -23,10 +24,10 @@ class EventForm(ModelForm):
 
 	
 	name 		= forms.CharField(label=(u'Name of the Event'))
-	description = forms.CharField(label=(u'Description of the Event'), widget=forms.Textarea())
+	description = forms.CharField(label=(u'Description of the Event'), widget=forms.Textarea(), required=False)
 	time	= forms.DateTimeField(("%d/%m/%Y %H:%M:%S",), label=(u'Start Date of the Event'), widget=forms.DateTimeInput(attrs={'style' : 'height : 30px'}, format="%d/%m/%Y %H:%M:%S"))
 	end_time	= forms.DateTimeField(("%d/%m/%Y %H:%M:%S",), label=(u'Start Date of the Event'), widget=forms.DateTimeInput(attrs={'style' : 'height : 30px'}, format="%d/%m/%Y %H:%M:%S"))
-	location 		= forms.CharField(label=(u'Location of the event:'), widget=forms.Textarea())
+	location 		= forms.CharField(label=(u'Location of the event:'), widget=forms.Textarea(), required=False)
 	class Meta:
 		model = Event
 		exclude = ('conference', 'enabled')

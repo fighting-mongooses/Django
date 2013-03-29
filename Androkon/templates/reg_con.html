@@ -70,6 +70,13 @@
 	    <p><label for="guests"{% if form.guests.errors %} class="error"{% endif %}>Guests:</label></p>
 	    <p>{{ form.guests }}</p>
 	</div>
+
+	<div class="register_div">
+	    {% if form.gmaps.errors %}<p class="error">{{ form.gmaps.errors }}<br/></p>{% endif %}
+	    <p><label for="gmaps"{% if form.gmaps.errors %} class="error"{% endif %}>Google Maps Link to Location:</label></p>
+	    <p>{{ form.gmaps }}</p>
+	</div>
+
 	<p><input type="submit" alt="register" /></p>
 	</form>
 {% endblock %}

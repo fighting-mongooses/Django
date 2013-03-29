@@ -13,6 +13,7 @@ class Conference(models.Model):
 	website     = models.URLField(help_text='The website of the conference')
 	guests		= models.TextField(help_text='A description of any guest speakers attending the conference', blank=True)
 	enabled     = models.BooleanField(help_text='Whether or not this conference is to be displayed to users', default=True)
+	gmaps 		= models.CharField(max_length=1000, help_text='')
 
 	# Meta data:
 	user = models.ForeignKey(User)

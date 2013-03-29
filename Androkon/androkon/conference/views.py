@@ -44,6 +44,7 @@ def ConferenceRegistration(request):
 				twitter=form.cleaned_data['twitter'],
 				website=form.cleaned_data['website'],
 				guests=form.cleaned_data['guests'],
+				gmaps=form.celaned_data['gmaps'],
 				user=request.user)
 			conference.save()
 			#pic = PhotoUpload(con = conference, picture=form.cleaned_data['pictures'])
@@ -77,6 +78,7 @@ def ConferenceUpdate(request, key):
 				con.twitter = form.cleaned_data['twitter']
 				con.website = form.cleaned_data['website']
 				con.guests = form.cleaned_data['guests']
+				con.gmaps = form.cleaned_data['gmaps']
 				con.save()
 				return HttpResponseRedirect(baseUrl + 'profile/')
 
@@ -87,7 +89,7 @@ def ConferenceUpdate(request, key):
 		else:
 			form = ConferenceForm({
 				'name': con.name, 'description': con.description, 'start_date': con.start_date,
-				'end_date': con.end_date, 'twitter': con.twitter, 'website': con.website, 'guests': con.guests})
+				'end_date': con.end_date, 'twitter': con.twitter, 'website': con.website, 'guests': con.guests, 'gmaps': con.gmaps})
 
 			context = { 'form' : form, 'baseUrl' : baseUrl }
 			return render_to_response('reg_con.html', context, context_instance=RequestContext(request))
