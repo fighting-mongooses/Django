@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from random import randint
+from conference.models import Conference
 
 class SignUpKey(models.Model):
 	key =  models.IntegerField(unique = True, help_text="unique key to allow one signup.")
@@ -23,17 +24,20 @@ class ConAdmin(models.Model):
 
 
 	def save(self, *args, **kwargs):
-	    try:
-	        existing = ConAdmin.objects.get(user=self.user)
-	        self.id = existing.id #force update instead of insert
-	    except ConAdmin.DoesNotExist:
-	        pass 
-	    models.Model.save(self, *args, **kwargs)
+		try:
+			existing = ConAdmin.objects.get(user=self.user)
+			self.id = existing.id #force update instead of insert
+		except ConAdmin.DoesNotExist:
+			pass 
+		self.user.save()
+		models.Model.save(self, *args, **kwargs)
+	
+	def delete(self, *args, **kwargs):
+		for c in Conference.objects.all().filter(user = self.user):
+			c.delete()
+		self.user.delete(*args, **kwargs)
+		super(ConAdmin, self).delete(*args, **kwargs)
 
-def create_conadmin_user_callback(sender, instance, **kwargs):
-	con_user, new = ConAdmin.objects.get_or_create(user=instance)
-
-post_save.connect(create_conadmin_user_callback, User)
 
 
 '''  c = ConAdmin(name="Tom", surname="Gregg", username="tom123", password="asdf", password1="asdf", email="tom1234@gmail.com") '''

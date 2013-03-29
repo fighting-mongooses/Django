@@ -1,10 +1,11 @@
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.sessions.models import Session
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from con_user.forms import RegistrationForm, LoginForm
-from con_user.models import ConAdmin, SignUpKey
+from con_user.models import *
 from django.contrib.auth import authenticate, login, logout
 from con_user.forms import RegistrationForm
 from conference.models import Conference
@@ -107,6 +108,10 @@ def LoginRequest(request):
 			password = form.cleaned_data['password']
 			con_user = authenticate(username=username, password = password)
 			if con_user is not None:
+				if not con_user.is_active:
+					context = {'baseUrl': baseUrl, 'message': 'You are banned'}
+					return render_to_response('denied.html', context, context_instance=RequestContext(request))
+
 				login(request, con_user)
 				return HttpResponseRedirect(baseUrl + 'profile/')
 			else:
@@ -139,10 +144,78 @@ def Profile(request):
 
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect(baseUrl + 'login/')
-	con_user = request.user.get_profile
+	
 	if request.user.is_superuser:
 		cons = Conference.objects.all()
 	else:
 		cons = Conference.objects.all().filter(user = request.user)
-	context = {'con_user': con_user, 'cons': cons, 'baseUrl': baseUrl}
+	context = {'con_user': request.user, 'cons': cons, 'baseUrl': baseUrl}
 	return render_to_response('profile.html', context, context_instance=RequestContext(request))
+
+
+def UserProfile(request, key):
+	baseUrl = "../"
+
+	if not request.user.is_authenticated():
+		return HttpResponseRedirect(baseUrl + 'login/')
+	if not request.user.is_superuser:
+		context = {'baseUrl' : baseUrl}	
+		return render_to_response('denied.html', context, context_instance=RequestContext(request))
+
+	user = ConAdmin.objects.get(pk=key)
+
+	cons = Conference.objects.all().filter(user = user)
+	context = {'con_user': user.user, 'cons': cons, 'baseUrl': baseUrl}
+	return render_to_response('profile.html', context, context_instance=RequestContext(request))
+
+def BanUser(request, key):
+	baseUrl = "../"
+
+	if not request.user.is_superuser:
+		context = {'baseUrl' : baseUrl}	
+		return render_to_response('denied.html', context, context_instance=RequestContext(request))
+	
+	user = ConAdmin.objects.get(pk=key)
+	[s.delete() for s in Session.objects.all() if s.get_decoded().get('_auth_user_id') == user.id] # forces logout of all sessions
+	user.user.is_active = False
+	user.save()
+
+	return HttpResponseRedirect(baseUrl+"manage_users/")
+
+def UnBanUser(request, key):
+	baseUrl = "../"
+
+	if not request.user.is_superuser:
+		context = {'baseUrl' : baseUrl}	
+		return render_to_response('denied.html', context, context_instance=RequestContext(request))
+	
+	user = ConAdmin.objects.get(pk=key)
+	user.user.is_active = True
+	user.save()
+
+	return HttpResponseRedirect(baseUrl+"manage_users/")
+
+def DeleteUser(request, key):
+	baseUrl = "../"
+
+	if not request.user.is_superuser:
+		context = {'baseUrl' : baseUrl}	
+		return render_to_response('denied.html', context, context_instance=RequestContext(request))
+	
+	user = ConAdmin.objects.get(pk=key)
+	[s.delete() for s in Session.objects.all() if s.get_decoded().get('_auth_user_id') == user.id] # forces logout of all sessions
+	user.delete()
+
+	return HttpResponseRedirect(baseUrl+"manage_users/")
+
+
+
+def ManageUsers(request):
+	baseUrl = "../"
+
+	if not request.user.is_superuser:
+		context = {'baseUrl': baseUrl, 'message': 'You do not have permission to manage users'}
+		return render_to_response('denied.html', context, context_instance=RequestContext(request))
+	else:
+		context = {'baseUrl': baseUrl, 'users': ConAdmin.objects.all() }
+		return render_to_response('manage_users.html', context, context_instance=RequestContext(request))	

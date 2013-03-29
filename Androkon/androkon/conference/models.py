@@ -34,6 +34,13 @@ class Conference(models.Model):
 	def get_absolute_url(self):
 		return "%s/" % self.slug
 
+	def delete(self, *args, **kwargs):
+		for e in Event.objects.all().filter(conference = self):
+			e.delete()
+		super(Conference, self).delete(*args, **kwargs)
+
+
+
 
 class Event(models.Model):
 

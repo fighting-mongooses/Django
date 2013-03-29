@@ -16,7 +16,12 @@ def json_cons(request):
 	return HttpResponse(json, mimetype='application/json')
 
 def json_events(request):
-	json = serializers.serialize("json", Event.objects.filter(enabled = True))
+	events = []
+	for e in Event.objects.all():
+		if e.enabled and e.conference.enabled:
+			events.append(e)
+
+	json = serializers.serialize("json", events)
 	return HttpResponse(json, mimetype='application/json')
 
 
