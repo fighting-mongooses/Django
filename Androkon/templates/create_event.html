@@ -5,6 +5,7 @@
 	{% csrf_token %}
 
 	{% if form.errors %}<p><h1>Please correct the following fields:</h1></p>{% endif %}
+	
 	<div class="register_div">
 	    {% if form.name.errors %}<p class="error">{{ form.name.errors }}<br/></p>{% endif %}
 	    <p><label for="name"{% if form.name.errors %} class="error"{% endif %}>Name:</label></p>
@@ -58,7 +59,13 @@
 		  });
 		</script>
 	</div>
-	
+
+	<div class="register_div">
+	    {% if form.location.errors %}<p class="error">{{ form.location.errors }}<br/></p>{% endif %}
+	    <p><label for="name"{% if form.location.errors %} class="error"{% endif %}>Location:</label></p>
+	    <p>{{ form.location }}</p>
+	</div>
+
 	
 	<p><input type="submit" alt="register" /></p>
 	</form>
