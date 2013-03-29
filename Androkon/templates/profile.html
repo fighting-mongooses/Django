@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
+<h3>{{con_user}}'s profile</h3>
 {% if cons %}
-	<h3>{{con_user}}'s profile</h3>
 	{% for conference in cons %}
 	{% if not conference.enabled %} <strike> {% endif %} {{ conference }}
 	

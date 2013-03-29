@@ -189,6 +189,7 @@ def AddEvent(request, key):
 					name = form.cleaned_data['name'],
 					description = form.cleaned_data['description'],
 					time = form.cleaned_data['time'],
+					end_time = form.cleaned_data['end_time'],
 					conference = con,
 					)
 
@@ -233,7 +234,7 @@ def EditEvent(request, key):
 				return render_to_response('create_event.html', context, context_instance=RequestContext(request))
 
 		else:
-			form = EventForm({'name': event.name, 'description': event.description, 'time': event.time})
+			form = EventForm({'name': event.name, 'description': event.description, 'time': event.time, 'end_time': event.end_time})
 			context = {'baseUrl': baseUrl, 'form': form}
 			return render_to_response('create_event.html', context, context_instance=RequestContext(request))
 

@@ -47,6 +47,7 @@ class Event(models.Model):
 	name 		= models.CharField(max_length="50", help_text="The name of the event. Maximum 50 characters.")
 	description = models.TextField(help_text="A description of the event.")
 	time 		= models.DateTimeField(help_text="Time and date for the event")
+	end_time 		= models.DateTimeField(help_text="when the event ends")
 	conference 	= models.ForeignKey(Conference)
 	enabled     = models.BooleanField(help_text='Whether or not this event is to be displayed to users', default=True)
 
