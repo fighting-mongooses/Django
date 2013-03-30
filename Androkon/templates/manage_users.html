@@ -1,23 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
 
-{% if users.count > 1 %}
-	{% for u in users %}
-		{% if u.user != user %}
-			<a href="{{baseUrl}}profile/{{u.id}}">{{u.user}}</a>
-			{% if u.user.is_active %}
-				<form action="{{baseUrl}}ban/{{u.id}}" class="prettybutton">  <input type="submit" value="Ban" class="prettybutton"> </form> 
-			{% else %}
-				<form action="{{baseUrl}}unban/{{u.id}}" class="prettybutton">  <input type="submit" value="Unban" class="prettybutton"> </form> 
-			{% endif %}
-
-			<form action="{{baseUrl}}delete_user/{{u.id}}" class="prettybutton">  <input type="submit" value="Delete User (irreversible)" class="prettybutton"> </form> 
-			<br/>
-			<br/>
+{% for u in users %}
+		<a href="{{baseUrl}}profile/{{u.id}}">{{u.user}}</a>
+		{% if u.user.is_active %}
+			<form action="{{baseUrl}}ban/{{u.id}}" class="prettybutton">  <input type="submit" value="Ban" class="prettybutton"> </form> 
+		{% else %}
+			<form action="{{baseUrl}}unban/{{u.id}}" class="prettybutton">  <input type="submit" value="Unban" class="prettybutton"> </form> 
 		{% endif %}
-	{%endfor%}
-{% else %}
-	No Users :(
-{% endif %}
+
+		<form action="{{baseUrl}}delete_user/{{u.id}}" class="prettybutton">  <input type="submit" value="Delete User (irreversible)" class="prettybutton"> </form> 
+		<br/>
+		<br/>
+{%endfor%}
 
 {% endblock %}

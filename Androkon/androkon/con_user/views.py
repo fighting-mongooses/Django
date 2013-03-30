@@ -154,7 +154,7 @@ def Profile(request):
 
 
 def UserProfile(request, key):
-	baseUrl = "../"
+	baseUrl = "../../"
 
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect(baseUrl + 'login/')
@@ -164,26 +164,26 @@ def UserProfile(request, key):
 
 	user = ConAdmin.objects.get(pk=key)
 
-	cons = Conference.objects.all().filter(user = user)
+	cons = Conference.objects.all().filter(user = user.user)
 	context = {'con_user': user.user, 'cons': cons, 'baseUrl': baseUrl}
 	return render_to_response('profile.html', context, context_instance=RequestContext(request))
 
 def BanUser(request, key):
-	baseUrl = "../"
+	baseUrl = "../../"
 
 	if not request.user.is_superuser:
 		context = {'baseUrl' : baseUrl}	
 		return render_to_response('denied.html', context, context_instance=RequestContext(request))
 	
 	user = ConAdmin.objects.get(pk=key)
-	[s.delete() for s in Session.objects.all() if s.get_decoded().get('_auth_user_id') == user.id] # forces logout of all sessions
+	[s.delete() for s in Session.objects.all() if s.get_decoded().get('_auth_user_id') == user.user.id] # forces logout of all sessions
 	user.user.is_active = False
 	user.save()
 
 	return HttpResponseRedirect(baseUrl+"manage_users/")
 
 def UnBanUser(request, key):
-	baseUrl = "../"
+	baseUrl = "../../"
 
 	if not request.user.is_superuser:
 		context = {'baseUrl' : baseUrl}	
@@ -196,14 +196,14 @@ def UnBanUser(request, key):
 	return HttpResponseRedirect(baseUrl+"manage_users/")
 
 def DeleteUser(request, key):
-	baseUrl = "../"
+	baseUrl = "../../"
 
 	if not request.user.is_superuser:
 		context = {'baseUrl' : baseUrl}	
 		return render_to_response('denied.html', context, context_instance=RequestContext(request))
 	
 	user = ConAdmin.objects.get(pk=key)
-	[s.delete() for s in Session.objects.all() if s.get_decoded().get('_auth_user_id') == user.id] # forces logout of all sessions
+	[s.delete() for s in Session.objects.all() if s.get_decoded().get('_auth_user_id') == user.user.id] # forces logout of all sessions
 	user.delete()
 
 	return HttpResponseRedirect(baseUrl+"manage_users/")
