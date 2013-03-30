@@ -229,6 +229,8 @@ def EditEvent(request, key):
 				event.name = form.cleaned_data['name']
 				event.description = form.cleaned_data['description']
 				event.time = form.cleaned_data['time']
+				event.end_time = form.cleaned_data['end_time']
+				event.location = form.cleaned_data['location']
 
 				event.save()
 				return HttpResponseRedirect(baseUrl+'manage_events/'+str(event.conference.id)+"/")
