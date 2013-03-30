@@ -44,7 +44,7 @@ def ConferenceRegistration(request):
 				twitter=form.cleaned_data['twitter'],
 				website=form.cleaned_data['website'],
 				guests=form.cleaned_data['guests'],
-				gmaps=form.celaned_data['gmaps'],
+				gmaps=form.cleaned_data['gmaps'],
 				user=request.user)
 			conference.save()
 			#pic = PhotoUpload(con = conference, picture=form.cleaned_data['pictures'])
