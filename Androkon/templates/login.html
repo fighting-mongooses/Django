@@ -15,7 +15,7 @@
         <p><label for="password"{% if form.password.errors %} class="error"{% endif %}>Password:</label></p>
         <p>{{ form.password }}</p>
 </div>
-<p><input type="submit" alt="register" /></p>
+<p><input type="submit" alt="register" value="Login"/></p>
 </form>
 <p>Forgot your password? <a href="{{baseUrl}}resetpassword/">Reset it!</a></p>
 {% endblock %}

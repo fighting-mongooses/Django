@@ -27,10 +27,10 @@ class EventForm(ModelForm):
 	
 	name 		= forms.CharField(label=(u'Name of the Event'))
 	description = forms.CharField(label=(u'Description of the Event'), widget=forms.Textarea(), required=False)
-	time	= forms.DateTimeField(("%d/%m/%Y %H:%M:%S",), label=(u'Start Date of the Event'), 
-		widget=forms.DateTimeInput(attrs={'style' : 'height : 30px'}, format="%d/%m/%Y %H:%M:%S"))
-	end_time	= forms.DateTimeField(("%d/%m/%Y %H:%M:%S",), label=(u'Start Date of the Event'),
-		 widget=forms.DateTimeInput(attrs={'style' : 'height : 30px'}, format="%d/%m/%Y %H:%M:%S"), required=False)
+	time	= forms.DateTimeField(("%d/%m/%Y %H:%M",), label=(u'Start Date of the Event'), 
+		widget=forms.DateTimeInput(attrs={'style' : 'height : 30px'}, format="%d/%m/%Y %H:%M"))
+	end_time	= forms.DateTimeField(("%d/%m/%Y %H:%M",), label=(u'Start Date of the Event'),
+		 widget=forms.DateTimeInput(attrs={'style' : 'height : 30px'}, format="%d/%m/%Y %H:%M"), required=False)
 	location 		= forms.CharField(label=(u'Location of the event:'), widget=forms.Textarea(), required=False)
 	class Meta:
 		model = Event

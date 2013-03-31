@@ -10,13 +10,20 @@
 	</div>
 	<div class="register_div">
 		{% if form.start_date.errors %}<p class="error">{{ form.start_date.errors }}<br/></p>{% endif %}
-		<p><label for="start_date"{% if form.start_date.errors %} class="error"{% endif %}>Start Date:</label></p>
-
+		<p><label for="start_date"{% if form.start_date.errors %} class="error"{% endif %}>Start Date 
+		<!--[if IE]>
+			(Format:dd/mm/yyyy)
+		<![endif]-->
+		:</label></p>
+		
 		<div id="starttime" class="input-append date">
 					{{ form.start_date  }}
+			<!--[if !IE]><!-->
 			<span class="add-on">
 				<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
 			</span>
+		 	<!--<![endif]-->
+		<!--[if !IE]><!-->
 		</div>
 		<script type="text/javascript" src="{{baseUrl}}static/js/jquery-1.9.1.min.js"></script> 
 		<script type="text/javascript" src="{{baseUrl}}static/bootstrap/js/bootstrap.min.js"></script>
@@ -28,17 +35,25 @@
 			pickTime: false
 		  });
 		</script>
+		 <!--<![endif]-->
 	</div>
 
 	<div class="register_div">
 		{% if form.end_date.errors %}<p class="error">{{ form.end_date.errors }}<br/></p>{% endif %}
-		<p><label for="start_date"{% if form.end_date.errors %} class="error"{% endif %}>End Date:</label></p>
+		<p><label for="start_date"{% if form.end_date.errors %} class="error"{% endif %}>End Date
+		<!--[if IE]>
+			(Format:dd/mm/yyyy)
+		<![endif]-->
+		:</label></p>
 
 		<div id="endtime" class="input-append date">
 					{{ form.end_date  }}
+			<!--[if !IE]><!-->
 			<span class="add-on">
 				<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
 			</span>
+		 	<!--<![endif]-->
+		<!--[if !IE]><!-->
 		</div>
 		<script type="text/javascript" src="{{baseUrl}}static/js/jquery-1.9.1.min.js"></script> 
 		<script type="text/javascript" src="{{baseUrl}}static/bootstrap/js/bootstrap.min.js"></script>
@@ -50,6 +65,7 @@
 			pickTime: false
 		  });
 		</script>
+		 <!--<![endif]-->
 	</div>
 
 	<div class="register_div">
@@ -79,6 +95,6 @@
 	    <p>{{ form.gmaps }}</p>
 	</div>
 
-	<p><input type="submit" alt="register" /></p>
+	<p><input type="submit" alt="register" value="Submit"/></p>
 	</form>
 {% endblock %}

@@ -2,7 +2,8 @@
 	<head>
 		<link rel="shortcut icon" href="{{baseUrl}}static/img/favicon.ico"/>
 		<link href="{{baseUrl}}static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    	<link rel="stylesheet" type="text/css" media="screen" href="{{baseUrl}}static/css/bootstrap-datetimepicker.min.css">
+    		<link rel="stylesheet" type="text/css" media="screen" href="{{baseUrl}}static/css/bootstrap-datetimepicker.min.css">
+		
 		<style type="text/css">
 			html
 			{
@@ -10,14 +11,17 @@
 			}
 			body
 			{
-        		background: #c0e2e4;
+        			background: #c0e2e4;
 				background-image: url('{{baseUrl}}static/img/bkg{{ "12345" | random }}.png');
 				background-repeat: no-repeat;
 				background-position: bottom left;
 			}
-			input
+			input[type="text"]
 			{
 				height : 30px;
+			}
+			input[type="submit"]
+			{
 				color: #0c8acc;
 			}
 			form.prettybutton
