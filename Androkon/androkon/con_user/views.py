@@ -64,7 +64,7 @@ def ConAdminRegistration(request, key):
 
 			if request.user.is_authenticated():
 				# If they're already a valid user, send them to their profile page.
-				context = {'message' : 'You are already signed in. Send a link to this page to someone to let the sign up.', 'baseUrl' : baseUrl}	
+				context = {'message' : 'You are already signed in. Send a link to this page to someone to let them sign up.', 'baseUrl' : baseUrl}	
 				return render_to_response('denied.html', context, context_instance=RequestContext(request))
 
 			if request.method =='POST':
