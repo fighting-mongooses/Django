@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.sessions.models import Session
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
-from con_user.forms import RegistrationForm, LoginForm
+from con_user.forms import *
 from con_user.models import *
 from django.contrib.auth import authenticate, login, logout
 from con_user.forms import RegistrationForm
@@ -125,6 +125,39 @@ def LoginRequest(request):
 		form = LoginForm()
 		context = {'form': form, 'baseUrl' : baseUrl}
 		return render_to_response('login.html', context, context_instance=RequestContext(request))
+
+
+def PassWordChange(request, key):
+	baseUrl = "../../"
+
+	user = User.objects.get(id=key)
+	if not (request.user.is_superuser or request.user == user):
+		print user
+		print request.user
+		context = {'baseUrl' : baseUrl}	
+		return render_to_response('denied.html', context, context_instance=RequestContext(request))
+	
+	if request.method == 'POST':
+		form = PassWordChangeForm(request.POST)
+		form.is_valid()
+
+		con_user = authenticate(username=user.username, password = form.cleaned_data['oldpass'])
+		if (con_user is not None) or request.user.is_superuser:
+			newpass = form.cleaned_data['newpass1']
+			if newpass == form.cleaned_data['newpass2']:
+				user.set_password(newpass)
+				user.save()
+				context = { 'form': PassWordChangeForm(), 'baseUrl': baseUrl, 'message': "Password change successful"}
+				return render_to_response('change_pass.html', context, context_instance=RequestContext(request))
+
+		context = { 'form': PassWordChangeForm(), 'baseUrl': baseUrl, 'message': "Invalid input, please try again"}
+		return render_to_response('change_pass.html', context, context_instance=RequestContext(request))
+	
+	else:
+		form = PassWordChangeForm()
+		context = { 'form': form, 'baseUrl': baseUrl }
+		return render_to_response('change_pass.html', context, context_instance=RequestContext(request))
+	
 
 def LogoutRequest(request):
 	baseUrl = "../"

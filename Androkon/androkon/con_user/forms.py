@@ -34,4 +34,7 @@ class LoginForm(forms.Form):
 	username = forms.CharField(label=(u'User Name'))
 	password = forms.CharField(label=(u'Password'), widget=forms.PasswordInput(render_value=False))
 
-			
+class PassWordChangeForm(forms.Form):
+	oldpass = forms.CharField(label=(u'Current Password'), widget=forms.PasswordInput(render_value=False))
+	newpass1 = forms.CharField(label=(u'New Password'), widget=forms.PasswordInput(render_value=False))
+	newpass2 = forms.CharField(label=(u'New Password Again'), widget=forms.PasswordInput(render_value=False))			

@@ -5,6 +5,7 @@
 		<a href="{{baseUrl}}profile/{{u.id}}">{{u.user}}</a>
 		{% if u.user.is_active %}
 			<form action="{{baseUrl}}ban/{{u.id}}" class="prettybutton">  <input type="submit" value="Ban" class="prettybutton"> </form> 
+			<form action="{{baseUrl}}change_pass/{{u.user.id}}" class="prettybutton">  <input type="submit" value="Change Password" class="prettybutton"> </form> 
 		{% else %}
 			<form action="{{baseUrl}}unban/{{u.id}}" class="prettybutton">  <input type="submit" value="Unban" class="prettybutton"> </form> 
 		{% endif %}
@@ -13,5 +14,7 @@
 		<br/>
 		<br/>
 {%endfor%}
+
+{% if not users %} No Users :( {% endif %}
 
 {% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<form action="" method="post">
+<p>{% if message %}<h2>{{ message }}</h2>{% endif %}
+{% csrf_token %}
+{% if form.errors %}<p>Please correct the following fields:</p>{% endif %}
+
+{% if not request.user.is_superuser %}
+	<div class="register_div">
+			{% if form.oldpass.errors %}<p class="error">{{ form.oldpass.errors }}</p>{% endif %}
+			<p><label for="oldpass"{% if form.oldpass.errors %} class="error"{% endif %}>{{form.oldpass.label}}</label></p>
+			<p>{{ form.oldpass }}</p>
+	</div>
+{% endif %}
+
+<div class="register_div">
+        {% if form.newpass1.errors %}<p class="error">{{ form.newpass1.errors }}</p>{% endif %}
+        <p><label for="newpass1"{% if form.newpass1.errors %} class="error"{% endif %}>{{form.newpass1.label}}</label></p>
+        <p>{{ form.newpass1 }}</p>
+</div>
+
+<div class="register_div">
+        {% if form.newpass2.errors %}<p class="error">{{ form.newpass2.errors }}</p>{% endif %}
+        <p><label for="newpass2"{% if form.newpass2.errors %} class="error"{% endif %}>{{form.newpass2.label}}</label></p>
+        <p>{{ form.newpass2 }}</p>
+</div>
+
+<p><input type="submit" alt="register" value="Submit"/></p>
+</form>
+{% endblock %}

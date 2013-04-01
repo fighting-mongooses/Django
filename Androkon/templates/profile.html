@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 <h3>{{con_user}}'s profile</h3>
+
+<a href="{{baseUrl}}change_pass/{{con_user.id}}">Change Password</a>
+<br/>
+
 {% if cons %}
 	{% for conference in cons %}
 	{% if not conference.enabled %} <strike> {% endif %} {{ conference }}
