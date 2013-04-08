@@ -13,6 +13,8 @@ from random import randint
 from datetime import datetime
 from django.views.generic import RedirectView
 
+
+# Method for returning all unused invite keys
 def Invite(request, msg):
 	baseUrl = "../../"
 	if request.user.is_superuser:
@@ -21,7 +23,7 @@ def Invite(request, msg):
 	context = {'baseUrl' : baseUrl }
 	return render_to_response('denied.html', context, context_instance=RequestContext(request))
 
-
+# Method for generating a new invite key
 def NewInvite(request, key):
 	key = int(key)
 	baseUrl = "../../../"
@@ -41,6 +43,7 @@ def NewInvite(request, key):
 	
 	return HttpResponseRedirect(baseUrl + 'invite')
 
+# Method for deleting an invite key
 def DeleteInvite(request, key):
 	key = int(key)
 	baseUrl = "../../../"
@@ -53,12 +56,12 @@ def DeleteInvite(request, key):
 
 	return HttpResponseRedirect(baseUrl + 'invite')
 
-
+# Method for registering a user
 def ConAdminRegistration(request, key):
 	key = int(key)
 	
 	baseUrl = "../../"
-	
+	# Validate the key
 	for k in SignUpKey.objects.all():
 		if k.key == key:
 
@@ -95,11 +98,12 @@ def ConAdminRegistration(request, key):
 	context = {'message' : 'You need an invite to sign up to this site. Please contact an administrator.', 'baseUrl' : baseUrl}	
 	return render_to_response('denied.html', context, context_instance=RequestContext(request))
 
-
+# Method for loggin-in a user
 def LoginRequest(request):
 	baseUrl = "../"
 
 	if request.user.is_authenticated():
+		# If they're already a valid user, send them to their profile page.
 		return HttpResponseRedirect(baseUrl + 'profile/')
 	if request.method == 'POST':
 		form = LoginForm(request.POST)
@@ -126,7 +130,7 @@ def LoginRequest(request):
 		context = {'form': form, 'baseUrl' : baseUrl}
 		return render_to_response('login.html', context, context_instance=RequestContext(request))
 
-
+# Method for changing a users password
 def PassWordChange(request, key):
 	baseUrl = "../../"
 
@@ -158,7 +162,7 @@ def PassWordChange(request, key):
 		context = { 'form': form, 'baseUrl': baseUrl }
 		return render_to_response('change_pass.html', context, context_instance=RequestContext(request))
 	
-
+# Method for logging-out a user
 def LogoutRequest(request):
 	baseUrl = "../"
 	logout(request)
@@ -171,7 +175,7 @@ def LogoutRequest(request):
 # 	context = {'conuser': conuser, 'user': user, 'username': username, 'message': message}
 # 	return render_to_response('profile.html', context, context_instance=RequestContext(request))
 
-
+# Method for retrieving a users profile details
 def Profile(request):
 	baseUrl = "../"
 
@@ -185,7 +189,7 @@ def Profile(request):
 	context = {'con_user': request.user, 'cons': cons, 'baseUrl': baseUrl}
 	return render_to_response('profile.html', context, context_instance=RequestContext(request))
 
-
+# Method for retrieving a users profile details
 def UserProfile(request, key):
 	baseUrl = "../../"
 
@@ -201,6 +205,7 @@ def UserProfile(request, key):
 	context = {'con_user': user.user, 'cons': cons, 'baseUrl': baseUrl}
 	return render_to_response('profile.html', context, context_instance=RequestContext(request))
 
+# Method for banning users
 def BanUser(request, key):
 	baseUrl = "../../"
 
@@ -215,6 +220,7 @@ def BanUser(request, key):
 
 	return HttpResponseRedirect(baseUrl+"manage_users/")
 
+# Method for un-banning a user
 def UnBanUser(request, key):
 	baseUrl = "../../"
 
@@ -228,6 +234,7 @@ def UnBanUser(request, key):
 
 	return HttpResponseRedirect(baseUrl+"manage_users/")
 
+#M ethod for removing a user from the site
 def DeleteUser(request, key):
 	baseUrl = "../../"
 
@@ -242,7 +249,7 @@ def DeleteUser(request, key):
 	return HttpResponseRedirect(baseUrl+"manage_users/")
 
 
-
+# Method to return all users of the site
 def ManageUsers(request):
 	baseUrl = "../"
 

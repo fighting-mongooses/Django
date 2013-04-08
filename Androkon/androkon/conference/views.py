@@ -34,6 +34,7 @@ def json_maps(request):
 	json = serializers.serialize("json", maps)
 	return HttpResponse(json, mimetype='application/json')
 
+# Method for registering a conference and validating it
 def ConferenceRegistration(request):
 	baseUrl = "../"	
 
@@ -67,6 +68,7 @@ def ConferenceRegistration(request):
 		context = {'form': form, 'baseUrl': baseUrl}
 		return render_to_response('reg_con.html', context, context_instance=RequestContext(request))
 
+# Method for updating a conference's details
 def ConferenceUpdate(request, key):
 	baseUrl = "../../"
 	
@@ -109,6 +111,7 @@ def ConferenceUpdate(request, key):
 		return render_to_response('denied.html', context, context_instance=RequestContext(request))
 
    
+# Method for deleting a Convention/Conferences details from the database
 def DeleteCon(request, key):
 	baseUrl = "../../"
 	
@@ -163,7 +166,7 @@ def RestoreCon(request, key):
 		context = {'baseUrl': baseUrl, 'message': 'You do not have permission to modify this conference.'}
 		return render_to_response('denied.html', context, context_instance=RequestContext(request))
 
-
+# Method for returning all Events associated to a certain Con
 def ManageEvents(request, key):
 	baseUrl = "../../"
 
@@ -239,7 +242,7 @@ def DeleteMap(request, con, map):
 	return render_to_response('denied.html', context, context_instance=RequestContext(request))
 	
 
-
+# Method for adding an event 
 def AddEvent(request, key):
 	baseUrl = "../../"
 
@@ -278,7 +281,7 @@ def AddEvent(request, key):
 		context = {'baseUrl': baseUrl, 'message': 'You do not have permission to dmodify this conference'}
 		return render_to_response('denied.html', context, context_instance=RequestContext(request))
 
-
+# Method for editing an event
 def EditEvent(request, key):
 	baseUrl = "../../"
 
@@ -314,7 +317,7 @@ def EditEvent(request, key):
 		context = {'baseUrl': baseUrl, 'message': 'You do not have permission to modify this event.'}
 		return render_to_response('denied.html', context, context_instance=RequestContext(request))
 
-   
+# Method for deleting an event
 def DeleteEvent(request, key):
 	baseUrl = "../../"
 	

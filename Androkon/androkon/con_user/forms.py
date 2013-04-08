@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.forms import ModelForm
 from con_user.models import ConAdmin
 
-
+# Class to represent the form needed to register and edit a user
 class RegistrationForm(ModelForm):
 	''' Model form for registering a user '''
 	username		= forms.CharField(label=(u'User Name'))
@@ -28,12 +28,13 @@ class RegistrationForm(ModelForm):
 			raise forms.ValidationError("The passwords did not match. Please try again.")
 		return self.cleaned_data 
 
-
+#Class to represent the form needed to login a user
 class LoginForm(forms.Form):
 
 	username = forms.CharField(label=(u'User Name'))
 	password = forms.CharField(label=(u'Password'), widget=forms.PasswordInput(render_value=False))
 
+#Class to represent a password reset form
 class PassWordChangeForm(forms.Form):
 	oldpass = forms.CharField(label=(u'Current Password'), widget=forms.PasswordInput(render_value=False))
 	newpass1 = forms.CharField(label=(u'New Password'), widget=forms.PasswordInput(render_value=False))

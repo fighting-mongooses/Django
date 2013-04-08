@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 import os
 
+# Class representing a Conference/Convention
 class Conference(models.Model):
 
 	# Core fields:
@@ -50,7 +51,7 @@ class Conference(models.Model):
 
 
 
-
+# Class to represent an Event object
 class Event(models.Model):
 
 	name 		= models.CharField(max_length="50", help_text="The name of the event. Maximum 50 characters.")
@@ -71,7 +72,7 @@ class Event(models.Model):
 	def get_absolute_url(self):
 		return "%s/" % self.slug
 
-
+# Class representing an image upload
 class Map(models.Model):
 
  	picture = models.ImageField(upload_to="media/")

@@ -4,6 +4,8 @@ from django.forms import ModelForm
 from conference.models import *
 from django.core.exceptions import ValidationError
 
+
+# Class representing a form for registering a conference
 class ConferenceForm(ModelForm):
 
 	name 		= forms.CharField(label=(u'Name of the Conference'))
@@ -23,6 +25,7 @@ class ConferenceForm(ModelForm):
 		model = Conference
 		exclude = ('user', 'enabled')
 
+# Class representing a form for registering an event
 class EventForm(ModelForm):
 
 	
@@ -38,6 +41,7 @@ class EventForm(ModelForm):
 		exclude = ('conference', 'enabled')
 
 
+# Class representing a form for uploading images
 class MapForm(ModelForm):
 	
 	picture = forms.ImageField(widget=forms.FileInput())
