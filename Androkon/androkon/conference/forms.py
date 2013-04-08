@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 from conference.models import *
+from django.core.exceptions import ValidationError
 
 class ConferenceForm(ModelForm):
 
@@ -35,3 +36,22 @@ class EventForm(ModelForm):
 	class Meta:
 		model = Event
 		exclude = ('conference', 'enabled')
+
+
+class MapForm(ModelForm):
+	
+	picture = forms.ImageField(widget=forms.FileInput())
+	
+	def clean_picture(self):
+		allowed_size = 1
+		image = self.cleaned_data.get('picture',False)
+		if image:
+			if image._size > allowed_size*1024*1024:
+				raise ValidationError("Image file too large ( > " + str(allowed_size) + "mb )")
+			return image
+		else:
+			raise ValidationError("Couldn't read uploaded image")
+	
+	class Meta:
+		model = Map
+		exclude = ('conference')

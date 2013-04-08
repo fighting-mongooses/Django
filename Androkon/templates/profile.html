@@ -18,6 +18,7 @@
 		<form action="{{baseUrl}}nuke_con/{{conference.id}}" class="prettybutton">  <input type="submit" value="Fully delete (irreversible)" class="prettybutton"> </form> 
 	{% else %} 
 
+	<form action="{{baseUrl}}manage_maps/{{conference.id}}" class="prettybutton">  <input type="submit" value="Manage Maps" class="prettybutton"> </form> 
 	<form action="{{baseUrl}}edit_con/{{conference.id}}" class="prettybutton">  <input type="submit" value="Edit" class="prettybutton"> </form> 
 	<form action="{{baseUrl}}manage_events/{{conference.id}}" class="prettybutton">  <input type="submit" value="Manage Events" class="prettybutton"> </form> 
 	<form action="{{baseUrl}}delete_con/{{conference.id}}" class="prettybutton">  <input type="submit" value="Delete" class="prettybutton"> </form> 

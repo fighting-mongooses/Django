@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
+import os
 
 class Conference(models.Model):
 
@@ -10,10 +11,14 @@ class Conference(models.Model):
 	start_date 	= models.DateTimeField(help_text='Start date and time for the conference.')
 	end_date 	= models.DateTimeField(help_text='End date and time for the conference.', null=True)
 	twitter 	= models.CharField(max_length=50, help_text='The twitter account of the conference')
-	website     = models.URLField(help_text='The website of the conference')
+	website	 = models.URLField(help_text='The website of the conference')
 	guests		= models.TextField(help_text='A description of any guest speakers attending the conference', blank=True)
-	enabled     = models.BooleanField(help_text='Whether or not this conference is to be displayed to users', default=True)
+	enabled	 = models.BooleanField(help_text='Whether or not this conference is to be displayed to users', default=True)
 	gmaps 		= models.CharField(max_length=1000, help_text='')
+
+
+	def getMaps(self):
+		return Map.objects.filter(con = self)
 
 	# Meta data:
 	user = models.ForeignKey(User)
@@ -38,6 +43,9 @@ class Conference(models.Model):
 	def delete(self, *args, **kwargs):
 		for e in Event.objects.all().filter(conference = self):
 			e.delete()
+		for m in Map.objects.all().filter(con = self):
+			os.remove(m.picture.path)
+			m.delete()
 		super(Conference, self).delete(*args, **kwargs)
 
 
@@ -51,7 +59,7 @@ class Event(models.Model):
 	end_time 		= models.DateTimeField(help_text="when the event ends", null=True)
 	location 	= models.TextField()
 	conference 	= models.ForeignKey(Conference)
-	enabled     = models.BooleanField(help_text='Whether or not this event is to be displayed to users', default=True)
+	enabled	 = models.BooleanField(help_text='Whether or not this event is to be displayed to users', default=True)
 
 
 	def __unicode__(self):
@@ -64,7 +72,7 @@ class Event(models.Model):
 		return "%s/" % self.slug
 
 
-# class PhotoUpload(models.Model):
+class Map(models.Model):
 
-# 	picture = models.ImageField(upload_to='/Users/ciaranegan/Django/Androkon/static/media/')
-# 	con 	 = models.ForeignKey(Conference)
+ 	picture = models.ImageField(upload_to="media/")
+ 	con = models.ForeignKey(Conference)

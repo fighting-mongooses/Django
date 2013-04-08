@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from conference.forms import *
 from django.views.generic import UpdateView
 from django.template.defaultfilters import slugify
+import os
 
 #def profile(request):
 #	entries = Conference.objects.get(user= )
@@ -24,6 +25,14 @@ def json_events(request):
 	json = serializers.serialize("json", events)
 	return HttpResponse(json, mimetype='application/json')
 
+def json_maps(request):
+	maps = []
+	for m in Map.objects.all():
+		if m.con and m.con.enabled:
+			maps.append(m)
+	
+	json = serializers.serialize("json", maps)
+	return HttpResponse(json, mimetype='application/json')
 
 def ConferenceRegistration(request):
 	baseUrl = "../"	
@@ -171,6 +180,64 @@ def ManageEvents(request, key):
 	else:
 		context = {'baseUrl': baseUrl, 'message': 'You do not have permission to modify this conference.'}
 		return render_to_response('denied.html', context, context_instance=RequestContext(request))
+
+
+def ManageMaps(request, key):
+	baseUrl = "../../"
+
+	try:
+		con = Conference.objects.get(pk=key)
+	except Conference.DoesNotExist:
+		context = {'baseUrl': baseUrl, 'message': 'Invalid con id.'}
+		return render_to_response('denied.html', context, context_instance=RequestContext(request))
+		
+	if request.user == con.user or request.user.is_superuser:
+		if request.method == 'POST':
+			form = MapForm(request.POST, request.FILES)
+			if form.is_valid():
+				newMap = Map(picture=request.FILES['picture'], con=con)
+				newMap.save()
+				
+				context = {'baseUrl': baseUrl, 'maps': con.getMaps(), 'con': con, 'form': MapForm()}
+				return render_to_response('manage_maps.html', context, context_instance=RequestContext(request))
+			
+			else:
+				print request.POST
+				print form.errors
+				context = {'baseUrl': baseUrl, 'maps': con.getMaps(), 'con': con, 'form': form}
+				return render_to_response('manage_maps.html', context, context_instance=RequestContext(request))
+		
+		else:
+			context = {'baseUrl': baseUrl, 'maps': con.getMaps(), 'con': con, 'form': MapForm()}
+			return render_to_response('manage_maps.html', context, context_instance=RequestContext(request))
+
+
+	else:
+		context = {'baseUrl': baseUrl, 'message': 'You do not have permission to modify this conference.'}
+		return render_to_response('denied.html', context, context_instance=RequestContext(request))
+
+def DeleteMap(request, con, map):
+	baseUrl = "../../../"
+	
+	try:
+		map = Map.objects.get(pk=map)
+	except Map.DoesNotExist:
+		context = {'baseUrl': baseUrl, 'message': 'Invalid map id.'}
+		return render_to_response('denied.html', context, context_instance=RequestContext(request))
+	
+	con = Conference.objects.get(pk=con)
+		
+	if (request.user == con.user or request.user.is_superuser) and con == map.con:
+		try:
+			os.remove(map.picture.path)
+		except:
+			pass
+		map.delete()
+		return HttpResponseRedirect("../../")
+	
+	context = {'baseUrl': baseUrl}
+	return render_to_response('denied.html', context, context_instance=RequestContext(request))
+	
 
 
 def AddEvent(request, key):

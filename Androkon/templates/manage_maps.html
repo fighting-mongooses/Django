@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+	Here you can add maps of your conference venue so attendees know where to go for events.<br/>
+	Maps must be uploaded as images (.jpg, .png, etc), and file must be less than 1mb.<br/><br/>
+
+	<form enctype="multipart/form-data" action="" method="post">
+	{% csrf_token %}
+	{% if form.errors %}<p><h1>Please correct the following fields:</h1></p>{% endif %}
+	<div class="register_div">
+	    {% if form.picture.errors %}<p class="error">{{ form.picture.errors }}<br/></p>{% endif %}
+	    <p><label for="picture"{% if form.picture.errors %} class="error"{% endif %}>Add New Map:</label></p>
+	    <p>{{ form.picture }}</p>
+	</div>
+	<div class="register_div">
+
+	<p><input type="submit" alt="register" value="Submit"/></p>
+	</form>
+	
+	{% if maps %}
+		<br/><br/>
+		Your maps for this con:<br/><br/>
+		{% for map in maps %}
+			<a href="{{baseUrl}}static/{{map.picture}}">
+				<img height=50 width=50 src="{{baseUrl}}static/{{map.picture}}">
+			</a> 
+			<form action="delete_map/{{map.id}}" class="prettybutton"><input type="submit" value="Delete" class="prettybutton"></form>
+			<br/><br/>
+			 
+		{% endfor %}
+	{% endif %}
+{% endblock %}
