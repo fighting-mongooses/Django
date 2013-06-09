@@ -11,6 +11,8 @@ ANDROKON_ROOT='/home/wheybags/Django/Androkon'
 SECRET_KEY = '10vc4k!@#tfrgpkxo-)&amp;u_2zj7#gyferbv94gyf2w$tcae^k-h'
 DEBUG = True
 
+# Change this to a list of hosts, eg ['a.com', 'b.org'] 
+ALLOWED_HOSTS = ['*']
 
 ###############################################################
 
